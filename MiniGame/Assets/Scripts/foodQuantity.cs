@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 //需要修改, 饥饿值与数量无关(每一小段表示一只老鼠)
-//测试用, 数值全都是偏高偏快的赋值
+//改成直条, 可能食物条总量为某常数*种群数量
+
 public class foodQuantity : MonoBehaviour
 {
     public int number;//种群数量
