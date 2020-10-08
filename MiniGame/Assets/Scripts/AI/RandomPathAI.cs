@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class RandomPathAI : MonoBehaviour
 {
-
     public State state;
     public State lastState;
 
@@ -28,12 +27,15 @@ public class RandomPathAI : MonoBehaviour
     private Vector2 moveDir;
     //碰撞后的运动方向
     private Vector2 curMoveDir;
+    //旋转次数
+    private int rotateTime;
 
     //碰墙后计算出来的切线方向
     private Vector3 tangent;
 
     //计时器
-    private float timer;
+    private float idletimer;
+    private float avoidtimer;
     //随机数
     private int randNum;
     //是否重新选取随机数
@@ -62,7 +64,12 @@ public class RandomPathAI : MonoBehaviour
         //time
         moveTime = 2.0f;
 
-        timer = 2.0f;
+        //
+        idletimer = 2.0f;
+        avoidtimer = 0.0f;
+
+        //rotate
+        rotateTime = 0;
 
         canSrand = true;
         //Pos
@@ -78,11 +85,12 @@ public class RandomPathAI : MonoBehaviour
         switch (state)
         {
             case State.Idle:
-                timer += Time.deltaTime;
-                if (timer > moveTime || canSrand)
+                idletimer += Time.deltaTime;
+                if (idletimer > moveTime || canSrand)
                 {
                     randNum = Random.Range(0, 8);
-                    timer = 0;
+                    idletimer = 0;
+                    avoidtimer = 0;
                     canSrand = false;
                 }
 
@@ -94,13 +102,19 @@ public class RandomPathAI : MonoBehaviour
                 break;
 
             case State.AvoidWall:
+                avoidtimer += Time.deltaTime;
+                if (avoidtimer > 1)
+                {
+                    state = State.Idle;
+                    avoidtimer = 0;
+                    idletimer = 0;
+                }
                 //Debug.Log("avoidWall");
                 AvoidWalling();
                 break;
         }
 
     }
-
 
     private void RaysDetection(Vector2 moveDir)
     {
@@ -112,17 +126,45 @@ public class RandomPathAI : MonoBehaviour
         //UnityEngine.Debug.DrawRay(this.transform.position, moveDir, Color.red);
         if (info && info.collider.tag == "Border")
         {
+            rotateTime = 0;
             canSrand = true;
             state = State.AvoidWall;
             lastState = State.AvoidWall;
-            curMoveDir = moveDir;           
+            curMoveDir = moveDir;
+            Vector3 dir = new Vector3(ray.direction.x, ray.direction.y, 0);
+            Vector3 wall = new Vector3((info.collider.gameObject.GetComponent<EdgeCollider2D>().points[0] - info.collider.gameObject.GetComponent<EdgeCollider2D>().points[1]).x,
+                (info.collider.gameObject.GetComponent<EdgeCollider2D>().points[0] - info.collider.gameObject.GetComponent<EdgeCollider2D>().points[1]).y, 0);
+
+            Vector3 normal = Vector3.Cross(curMoveDir, wall);
+            //Debug.Log(Vector3.Dot(curMoveDir, wall));
+            if (Vector3.Dot(curMoveDir, wall) <= -0.01f)
+            {
+                tangent = Vector3.Cross(dir, normal).normalized * 2;
+            }
+            if (Vector3.Dot(curMoveDir, wall) >= 0.01f)
+            {
+                tangent = Vector3.Cross(dir, normal).normalized * (-2);
+            }
+            if (Vector3.Dot(curMoveDir, wall) < 0.001f && Vector3.Dot(curMoveDir, wall) > -0.001f)
+            {
+
+                tangent = -2 * curMoveDir.normalized;
+            }
+
+            //Debug.Log(tangent + "tangent");
+            UnityEngine.Debug.DrawRay(info.point, wall, Color.yellow);
+            UnityEngine.Debug.DrawRay(info.point, tangent, Color.black);
+
+            curMoveDir = new Vector2(tangent.x, tangent.y) + curMoveDir;
+
+            UnityEngine.Debug.DrawRay(this.transform.position, curMoveDir, Color.red);
         }
         else
         {
             if(lastState == State.AvoidWall)
             {
-                state = State.Idle;
-                lastState = State.Idle;
+                //state = State.Idle;
+                //lastState = State.Idle;
             }
         }
     }
@@ -161,38 +203,15 @@ public class RandomPathAI : MonoBehaviour
 
     private void AvoidWalling()
     {
-        //canSrand = true;
-
-        //UnityEngine.Debug.Log("击中");
-        Vector3 dir = new Vector3(ray.direction.x, ray.direction.y, 0);
-        Vector3 wall = new Vector3((info.collider.gameObject.GetComponent<EdgeCollider2D>().points[0] - info.collider.gameObject.GetComponent<EdgeCollider2D>().points[1]).x,
-            (info.collider.gameObject.GetComponent<EdgeCollider2D>().points[0] - info.collider.gameObject.GetComponent<EdgeCollider2D>().points[1]).y, 0);
-
-        Vector3 normal = Vector3.Cross(curMoveDir, wall);
-        //Debug.Log(Vector3.Dot(curMoveDir, wall));
-        if (Vector3.Dot(curMoveDir, wall) <= -0.01f)
+        float angle = Vector3.SignedAngle(moveDir, curMoveDir, Vector3.forward);
+        if (rotateTime == 0)
         {
-            tangent = Vector3.Cross(dir, normal).normalized * 2;
-        }
-        if (Vector3.Dot(curMoveDir, wall) >= 0.01f)
-        {
-            tangent = Vector3.Cross(dir, normal).normalized * (-2);
-        }
-        if (Vector3.Dot(curMoveDir, wall) < 0.001f && Vector3.Dot(curMoveDir, wall) > -0.001f)
-        {
-
-            tangent = -2 * curMoveDir.normalized;
+            this.transform.Rotate(new Vector3(0, 0, angle), Space.World);
+            rotateTime = 1;
         }
 
-        //Debug.Log(tangent + "tangent");
-        UnityEngine.Debug.DrawRay(info.point, wall, Color.yellow);
-        UnityEngine.Debug.DrawRay(info.point, tangent, Color.black);
         
-        curMoveDir = new Vector2(tangent.x, tangent.y) + curMoveDir;
-        
-        UnityEngine.Debug.DrawRay(this.transform.position, curMoveDir, Color.red);
-        
-        //this.transform.rotation = Quaternion.Euler(0, 0, angle + 90);
+        moveDir = curMoveDir;
         this.transform.Translate(curMoveDir.normalized * Time.deltaTime * idleSpeed, Space.World);
     }
 
