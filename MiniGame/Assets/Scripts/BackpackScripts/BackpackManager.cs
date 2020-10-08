@@ -26,6 +26,7 @@ public class BackpackManager : MonoBehaviour
     void Start()
     {
         backpack = new Backpack(9);
+        RefreshItem();
     }
 
     public static void RefreshItem()
@@ -56,7 +57,9 @@ public class BackpackManager : MonoBehaviour
                     int x = instance.backpack.storeData[i, j].x;
                     int y = instance.backpack.storeData[i, j].y;
                     if (i == x && j == y)
+                    {
                         instance.slots[tmp].GetComponent<Slot>().SetUpSlot(instance.myInventory.itemList[instance.backpack.data[i, j]]);//同步图片等物品信息
+                    }
                     // else
                     //     instance.slots[tmp].GetComponent<Slot>().SetUpSlot(null);
                 }

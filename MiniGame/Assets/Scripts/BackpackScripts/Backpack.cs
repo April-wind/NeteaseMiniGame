@@ -29,11 +29,21 @@ public class Backpack
                 storeData[i, j] = new Vector2Int(-1, -1);
             }
         data[0, 0] = 0;
+        for (int i = 0; i < 8; i++)
+        {
+            GridGeneration();
+        }
     }
 
     //单点物品放入检测函数, x,y为受检测点的坐标
-    private bool Checkxy(int x, int y, Item item)
+    private bool CheckPut(int x, int y, Item item)
     {
+        //越界检测
+        if (x + item.height > data.GetLength(0))
+            return false;
+        if (y + item.width > data.GetLength(1))
+            return false;
+
         for (int i = 0; i < item.height; i++)
             for (int j = 0; j < item.width; j++)
                 if (data[x + i, y + j] != 0)
@@ -51,7 +61,7 @@ public class Backpack
         {
             for (int j = 0; j < data.GetLength(1); j++)//从列扫描
             {
-                if (Checkxy(i, j, item))//逐点判断
+                if (CheckPut(i, j, item))//逐点判断
                 {
                     t = new Vector2Int(i, j);
                     flag = true;

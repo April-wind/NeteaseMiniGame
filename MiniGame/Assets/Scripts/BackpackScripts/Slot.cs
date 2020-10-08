@@ -19,9 +19,12 @@ public class Slot : MonoBehaviour
             itemInSlot.SetActive(false);
             return;
         }
+        itemInSlot.GetComponent<ItemOnDrag>().enabled = available;
         //有物品则做赋值
         slotImage.sprite = item.itemImage;
         //图片显示为原大小
         itemInSlot.GetComponent<RectTransform>().sizeDelta = new Vector2(item.width * 100, item.height * 100);
+        // itemInSlot.transform.SetParent(transform.parent.parent.parent);
+        // itemInSlot.transform.position = transform.position;
     }
 }
