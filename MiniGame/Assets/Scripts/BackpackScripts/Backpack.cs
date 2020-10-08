@@ -12,26 +12,38 @@ public class Backpack
     */
     public Vector2Int[,] storeData;
 
+    //当前可用的最新的格子的坐标
     public int newX = 0;
     public int newY = 0;
 
 
-    //初始化, n,m表示最大长宽,而非可用长
-    Backpack(int n, int m)
+    //初始化, n表示最大长宽(初始化成方阵),而非可用长
+    public Backpack(int n)
     {
-        data = new int[n, m];
-        storeData = new Vector2Int[n, m];
+        data = new int[n, n];
+        storeData = new Vector2Int[n, n];
         for (int i = 0; i < n; i++)
-            for (int j = 0; j < m; j++)
+            for (int j = 0; j < n; j++)
             {
                 data[i, j] = -1;
                 storeData[i, j] = new Vector2Int(-1, -1);
             }
+        data[0, 0] = 0;
+        for (int i = 0; i < 8; i++)
+        {
+            GridGeneration();
+        }
     }
 
     //单点物品放入检测函数, x,y为受检测点的坐标
-    private bool Checkxy(int x, int y, Item item)
+    private bool CheckPut(int x, int y, Item item)
     {
+        //越界检测
+        if (x + item.height > data.GetLength(0))
+            return false;
+        if (y + item.width > data.GetLength(1))
+            return false;
+
         for (int i = 0; i < item.height; i++)
             for (int j = 0; j < item.width; j++)
                 if (data[x + i, y + j] != 0)
@@ -49,7 +61,7 @@ public class Backpack
         {
             for (int j = 0; j < data.GetLength(1); j++)//从列扫描
             {
-                if (Checkxy(i, j, item))//逐点判断
+                if (CheckPut(i, j, item))//逐点判断
                 {
                     t = new Vector2Int(i, j);
                     flag = true;
@@ -76,16 +88,17 @@ public class Backpack
     }
 
     //单点物品减少执行函数, x,y为受执行点的坐标
-    public void itemReduction(int x, int y, Item item)
+    public void ItemReduction(int x, int y)
     {
+
         if (storeData[x, y].x < 0)
             return;
-
-        Vector2Int t = new Vector2Int(-1, -1);
 
         //记录物品原先的存储位置
         int itemX = storeData[x, y].x;
         int itemY = storeData[x, y].y;
+        Item item = BackpackManager.instance.myInventory.itemList[data[itemX, itemY]];
+        Vector2Int t = new Vector2Int(-1, -1);
 
         //从data和storeData层面删除物品
         for (int i = 0; i < item.height; i++)
@@ -99,57 +112,50 @@ public class Backpack
         //UI动画();
     }
 
-    //单点格子增加函数
-    //(暂未考虑越界!!!!)
+    //单点格子增加函数(已考虑越界,即扩充至data[n,n]时)
     public void GridGeneration()
     {
         if (newX > newY)//行内
         {
-            data[newX, newY] = 0;
             newY++;
+            data[newX, newY] = 0;
         }
         else if (newX == newY)//行的末端
         {
-            data[newX, newY] = 0;
+            if (newX == data.GetLength(0) - 1)//越界检测
+                return;
             newX = 0;
             newY++;
+            data[newX, newY] = 0;
         }
         else if (newX < newY - 1)//列内
         {
-            data[newX, newY] = 0;
             newX++;
+            data[newX, newY] = 0;
         }
         else if (newX == newY - 1)//列的末端
         {
-            data[newX, newY] = 0;
             newX = newY;
             newY = 0;
+            data[newX, newY] = 0;
         }
     }
 
-    //单点格子减少函数
+    //单点格子减少函数(已考虑越界,即减少至[0,0]时,但可能导致增加函数出bug)
     public void GridReduction()
     {
-        if (newX == 0 && newY == 0)//仅剩一格
+        if (data[newX, newY] != 0)
+            ItemReduction(newX, newY);
+        if (newY == 0)//行末
         {
             data[newX, newY] = -1;
-            //GameOver();
-            return;
-        }
-        if (newX + 1 > newY && newY != 0)//行内
-        {
-            data[newX, newY] = -1;
-            newY--;
-        }
-        else if (newY == 0)//行末
-        {
-            data[newX, newY] = -1;
+            if (newX == 0)//越界检测
+            {
+                //GameOver();
+                //此时游戏应该结束, 否则继续运行GridGeneration()将出现忽略[0,0]的错误
+                return;
+            }
             newY = newX;
-            newX--;
-        }
-        else if (newX < newY && newX != 0)//列内
-        {
-            data[newX, newY] = -1;
             newX--;
         }
         else if (newX == 0)//列末
@@ -157,6 +163,16 @@ public class Backpack
             data[newX, newY] = -1;
             newY--;
             newX = newY;
+        }
+        else if (newX + 1 > newY)//行内
+        {
+            data[newX, newY] = -1;
+            newY--;
+        }
+        else if (newX < newY)//列内
+        {
+            data[newX, newY] = -1;
+            newX--;
         }
     }
 
