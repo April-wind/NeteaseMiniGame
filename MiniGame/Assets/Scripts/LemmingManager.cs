@@ -10,6 +10,7 @@ public class LemmingManager : MonoBehaviour
     //归位速度
     [SerializeField]
     private float returnSpeed;
+    private float returnSpeedSlow;
     //移动方向
     [SerializeField]
     private Vector3 moveDir;
@@ -55,6 +56,7 @@ public class LemmingManager : MonoBehaviour
         distance = 1.8f;
         moveSpeed = 1.0f;
         returnSpeed = 10.0f;
+        returnSpeedSlow = 2.0f;
 
         PositionCheck(xPosition, yPosition);
 
@@ -164,7 +166,6 @@ public class LemmingManager : MonoBehaviour
     private void LemMove(float param)
     {
         target = this.transform.localPosition + new Vector3(param * lemmingMove.moveDir.x, param * lemmingMove.moveDir.y, 0);
-
         haveInput = false;
     }
 
@@ -177,6 +178,8 @@ public class LemmingManager : MonoBehaviour
     {
         if (currentX != x || currentY != y)
         {
+            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, new Vector3(distance * xPosition, -1 * distance * yPosition,
+                -1), returnSpeedSlow * Time.deltaTime);
             currentX = x;
             currentY = y;
             haveInput = true;
