@@ -23,7 +23,7 @@ public class Slot : MonoBehaviour
         //有物品则做赋值
         slotImage.sprite = item.itemImage;
         //图片显示为原大小
-        itemInSlot.GetComponent<RectTransform>().sizeDelta = new Vector2(item.width * 100, item.height * 100);
+        itemInSlot.GetComponent<RectTransform>().sizeDelta = new Vector2(item.width * itemInSlot.GetComponent<RectTransform>().sizeDelta.x, item.height * itemInSlot.GetComponent<RectTransform>().sizeDelta.y);
         // itemInSlot.transform.SetParent(transform.parent.parent.parent);
         // itemInSlot.transform.position = transform.position;
     }
