@@ -328,10 +328,10 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 10000
+  far clip plane: 1000
   field of view: 60
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 460.1
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -355,7 +355,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 296883384}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 800, y: 450, z: -777}
+  m_LocalPosition: {x: 800, y: 450, z: -477}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -824,6 +824,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6cebc7c0937c7e44b4e727f5f1b99e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  backpackCamera: {fileID: 296883386}
+  backpackCanvas: {fileID: 2097199376}
 --- !u!1 &1878847488
 GameObject:
   m_ObjectHideFlags: 0
@@ -916,6 +918,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   number: 100
   health: 100
+  healthMax: 0
   timer: 2
   processTrans: {fileID: 34377546}
   indicatorTrans: {fileID: 2075679100}
