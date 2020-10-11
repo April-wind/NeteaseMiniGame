@@ -9,8 +9,9 @@ using UnityEngine.UI;
 public class foodQuantity : MonoBehaviour
 {
     public int number;//种群数量
-    public float health = 100;//食物数量?饥饿值?健康度?
-    public float timer = 2.0f;
+    public float health = 100;//饥饿条
+    public float healthMax;//饥饿条上限
+    public float timer = 100.0f;
     public Transform processTrans;//进度条
 
     public Transform indicatorTrans;//文字框
@@ -19,38 +20,25 @@ public class foodQuantity : MonoBehaviour
     {
         HealthAutoReduction();
     }
-
+    public void HealthIncrease()
+    {
+        healthMax += 1;
+        health += 1;
+    }
     public void HealthAutoReduction()
     {
-        health -= (float)(0.001 * number);
-        indicatorTrans.GetComponent<Text>().text = ((int)health).ToString() + "%";
-        processTrans.GetComponent<Image>().fillAmount = health / 100.0f;
-        if (health >= 30 && health < 50)
-        {
-            timer -= 2 * Time.deltaTime;
-        }
+        // health -= Time.deltaTime * (float)System.Math.Sqrt(number);
+        // timer -= Time.deltaTime * (float)System.Math.Sqrt(number);
 
-        if (health >= 10 && health < 30)
-        {
-            timer -= 5 * Time.deltaTime;
-        }
-
-        if (health < 10)
-        {
-            timer -= 10 * Time.deltaTime;
-        }
-
-        if (health <= 0)
-        {
-            health = 0;
-            //GameOver();
-        }
-
-        if (timer <= 0)
-        {
-            number -= (int)(0.1 * number);
-            timer = 2.0f;
-        }
-
+        // if (timer < 9.0f)
+        // {
+        //     Debug.Log(timer);
+        //     for (int i = 0; i < (int)(100.0f - timer); i++)
+        //         BackpackManager.RemoveItem();
+        //     Debug.Log((int)(100.0f - timer));
+        //     timer = 100.0f;
+        // }
+        // indicatorTrans.GetComponent<Text>().text = ((int)health).ToString() + "%";
+        // processTrans.GetComponent<Image>().fillAmount = health / 100.0f;
     }
 }
