@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,6 +20,7 @@ public class LemmingManager : MonoBehaviour
     //当前方向因子
     private float currentX;
     private float currentY;
+    private float param;
 
     //旅鼠之间的间隔
     [SerializeField]
@@ -66,12 +68,12 @@ public class LemmingManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        ChangeMoveDir(lemmingMove.moveDir.x, lemmingMove.moveDir.y, param);
         if (lemmingMove.moveDir.x > 0 && lemmingMove.moveDir.y > 0)
         {
             int index = (int)Mathf.Sqrt(lemmingSumControl.LemmingNum);
-            float param = Mathf.Sqrt(Mathf.Pow((0 - xPosition), 2) + Mathf.Pow((index - yPosition), 2));
-            ChangeMoveDir(lemmingMove.moveDir.x, lemmingMove.moveDir.y);
+            param = Mathf.Sqrt(Mathf.Pow((0 - xPosition), 2) + Mathf.Pow((index - yPosition), 2));
+            //ChangeMoveDir(lemmingMove.moveDir.x, lemmingMove.moveDir.y);
             if (haveInput)
             {
                 LemMove(param);
@@ -81,8 +83,8 @@ public class LemmingManager : MonoBehaviour
         else if (lemmingMove.moveDir.x > 0 && lemmingMove.moveDir.y < 0)
         {
             int index = (int)Mathf.Sqrt(lemmingSumControl.LemmingNum);
-            float param = Mathf.Sqrt(Mathf.Pow((0 - xPosition), 2) + Mathf.Pow((0 - yPosition), 2));
-            ChangeMoveDir(lemmingMove.moveDir.x, lemmingMove.moveDir.y);
+            param = Mathf.Sqrt(Mathf.Pow((0 - xPosition), 2) + Mathf.Pow((0 - yPosition), 2));
+            //ChangeMoveDir(lemmingMove.moveDir.x, lemmingMove.moveDir.y);
             if (haveInput)
             {
                 LemMove(param);
@@ -92,8 +94,8 @@ public class LemmingManager : MonoBehaviour
         else if (lemmingMove.moveDir.x < 0 && lemmingMove.moveDir.y > 0)
         {
             int index = (int)Mathf.Sqrt(lemmingSumControl.LemmingNum);
-            float param = Mathf.Sqrt(Mathf.Pow((index - xPosition), 2) + Mathf.Pow((index - yPosition), 2));
-            ChangeMoveDir(lemmingMove.moveDir.x, lemmingMove.moveDir.y);
+            param = Mathf.Sqrt(Mathf.Pow((index - xPosition), 2) + Mathf.Pow((index - yPosition), 2));
+            //ChangeMoveDir(lemmingMove.moveDir.x, lemmingMove.moveDir.y);
             if (haveInput)
             {
                 LemMove(param);
@@ -103,8 +105,8 @@ public class LemmingManager : MonoBehaviour
         else if (lemmingMove.moveDir.x < 0 && lemmingMove.moveDir.y < 0)
         {
             int index = (int)Mathf.Sqrt(lemmingSumControl.LemmingNum);
-            float param = Mathf.Sqrt(Mathf.Pow((index - xPosition), 2) + Mathf.Pow((0 - yPosition), 2));
-            ChangeMoveDir(lemmingMove.moveDir.x, lemmingMove.moveDir.y);
+            param = Mathf.Sqrt(Mathf.Pow((index - xPosition), 2) + Mathf.Pow((0 - yPosition), 2));
+            //ChangeMoveDir(lemmingMove.moveDir.x, lemmingMove.moveDir.y);
             if (haveInput)
             {
                 LemMove(param);
@@ -114,8 +116,8 @@ public class LemmingManager : MonoBehaviour
         else if (lemmingMove.moveDir.x < 0 && lemmingMove.moveDir.y == 0)
         {
             int index = (int)Mathf.Sqrt(lemmingSumControl.LemmingNum);
-            float param = Mathf.Abs(index - xPosition);
-            ChangeMoveDir(lemmingMove.moveDir.x, lemmingMove.moveDir.y);
+            param = Mathf.Abs(index - xPosition);
+            //ChangeMoveDir(lemmingMove.moveDir.x, lemmingMove.moveDir.y);
             if (haveInput)
             {
                 LemMove(param);
@@ -125,8 +127,8 @@ public class LemmingManager : MonoBehaviour
         else if (lemmingMove.moveDir.x > 0 && lemmingMove.moveDir.y == 0)
         {
             int index = (int)Mathf.Sqrt(lemmingSumControl.LemmingNum);
-            float param = Mathf.Abs(0 - xPosition);
-            ChangeMoveDir(lemmingMove.moveDir.x, lemmingMove.moveDir.y);
+            param = Mathf.Abs(0 - xPosition);
+            //ChangeMoveDir(lemmingMove.moveDir.x, lemmingMove.moveDir.y);
             if (haveInput)
             {
                 LemMove(param);
@@ -136,8 +138,8 @@ public class LemmingManager : MonoBehaviour
         else if (lemmingMove.moveDir.x == 0 && lemmingMove.moveDir.y > 0)
         {
             int index = (int)Mathf.Sqrt(lemmingSumControl.LemmingNum);
-            float param = Mathf.Abs(index - yPosition);
-            ChangeMoveDir(lemmingMove.moveDir.x, lemmingMove.moveDir.y);
+            param = Mathf.Abs(index - yPosition);
+            //ChangeMoveDir(lemmingMove.moveDir.x, lemmingMove.moveDir.y);
             if (haveInput)
             {
                 LemMove(param);
@@ -147,8 +149,8 @@ public class LemmingManager : MonoBehaviour
         else if (lemmingMove.moveDir.x == 0 && lemmingMove.moveDir.y < 0)
         {
             int index = (int)Mathf.Sqrt(lemmingSumControl.LemmingNum);
-            float param = Mathf.Abs(0 - yPosition);
-            ChangeMoveDir(lemmingMove.moveDir.x, lemmingMove.moveDir.y);
+            param = Mathf.Abs(0 - yPosition);
+            //ChangeMoveDir(lemmingMove.moveDir.x, lemmingMove.moveDir.y);
             if (haveInput)
             {
                 LemMove(param);
@@ -157,7 +159,6 @@ public class LemmingManager : MonoBehaviour
         }
         else
         {
-            //haveInput = true;
             this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, new Vector3(distance * xPosition, -1 * distance * yPosition,
                 -1), returnSpeed * Time.deltaTime);
         }
@@ -165,7 +166,7 @@ public class LemmingManager : MonoBehaviour
 
     private void LemMove(float param)
     {
-        target = this.transform.localPosition + new Vector3(param * lemmingMove.moveDir.x, param * lemmingMove.moveDir.y, 0);
+        target = transform.localPosition + new Vector3(param * lemmingMove.moveDir.x, param * lemmingMove.moveDir.y, 0);
         haveInput = false;
     }
 
@@ -174,12 +175,12 @@ public class LemmingManager : MonoBehaviour
     /// 检测是否改变移动方向
     /// </summary>
     /// <param name="param"></param>
-    private void ChangeMoveDir(float x, float y)
+    private void ChangeMoveDir(float x, float y, float param)
     {
         if (currentX != x || currentY != y)
         {
-            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, new Vector3(distance * xPosition, -1 * distance * yPosition,
-                -1), returnSpeedSlow * Time.deltaTime);
+            target = new Vector3(xPosition * distance, -yPosition * distance, 0) + new Vector3(param * lemmingMove.moveDir.x, param * lemmingMove.moveDir.y, 0);
+
             currentX = x;
             currentY = y;
             haveInput = true;

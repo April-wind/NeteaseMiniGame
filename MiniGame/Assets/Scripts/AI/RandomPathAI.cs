@@ -122,7 +122,7 @@ public class RandomPathAI : MonoBehaviour
         ray = new Ray2D(new Vector2(this.transform.position.x, this.transform.position.y) + moveDir.normalized * boxCollider2D.size.x * Mathf.Sqrt(2) / 2, moveDir.normalized);
         UnityEngine.Debug.DrawRay(ray.origin, ray.direction, Color.blue);
 
-        info = Physics2D.Raycast(ray.origin, ray.direction, 1f, mask);
+        info = Physics2D.Raycast(ray.origin, ray.direction, 2f, mask);
         //UnityEngine.Debug.DrawRay(this.transform.position, moveDir, Color.red);
         if (info && info.collider.tag == "Border")
         {
