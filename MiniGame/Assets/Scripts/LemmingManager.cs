@@ -21,6 +21,12 @@ public class LemmingManager : MonoBehaviour
     private float currentX;
     private float currentY;
     private float param;
+    [SerializeField]
+    //旅鼠相对移动的距离
+    private float targetDistance;
+    [SerializeField]
+    //旅鼠的运动速度因子
+    public float speedFactor;
 
     //旅鼠之间的间隔
     [SerializeField]
@@ -55,6 +61,10 @@ public class LemmingManager : MonoBehaviour
         lemmingMove = player.GetComponent<LemmingMove>();
         lemmingSumControl = GameObject.FindWithTag("GameController").GetComponent<LemmingSumControl>();
 
+        //dir
+        targetDistance = 5.0f;
+        //speedFactor = 2.0f;
+
         distance = 1.8f;
         moveSpeed = 1.0f;
         returnSpeed = 10.0f;
@@ -78,7 +88,7 @@ public class LemmingManager : MonoBehaviour
             {
                 LemMove(param);
             }
-            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * Time.deltaTime);
+            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * (param + 1) * Time.deltaTime);
         }
         else if (lemmingMove.moveDir.x > 0 && lemmingMove.moveDir.y < 0)
         {
@@ -89,7 +99,7 @@ public class LemmingManager : MonoBehaviour
             {
                 LemMove(param);
             }
-            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * Time.deltaTime);
+            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * (param + 1) * Time.deltaTime);
         }
         else if (lemmingMove.moveDir.x < 0 && lemmingMove.moveDir.y > 0)
         {
@@ -100,7 +110,7 @@ public class LemmingManager : MonoBehaviour
             {
                 LemMove(param);
             }
-            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * Time.deltaTime);
+            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * speedFactor * (param + 1) * Time.deltaTime);
         }
         else if (lemmingMove.moveDir.x < 0 && lemmingMove.moveDir.y < 0)
         {
@@ -111,7 +121,7 @@ public class LemmingManager : MonoBehaviour
             {
                 LemMove(param);
             }
-            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * Time.deltaTime);
+            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * speedFactor * (param + 1) * Time.deltaTime);
         }
         else if (lemmingMove.moveDir.x < 0 && lemmingMove.moveDir.y == 0)
         {
@@ -122,7 +132,7 @@ public class LemmingManager : MonoBehaviour
             {
                 LemMove(param);
             }
-            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * Time.deltaTime);
+            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * speedFactor * (param + 1) * Time.deltaTime);
         }
         else if (lemmingMove.moveDir.x > 0 && lemmingMove.moveDir.y == 0)
         {
@@ -133,7 +143,7 @@ public class LemmingManager : MonoBehaviour
             {
                 LemMove(param);
             }
-            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * Time.deltaTime);
+            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * speedFactor * (param + 1) * Time.deltaTime);
         }
         else if (lemmingMove.moveDir.x == 0 && lemmingMove.moveDir.y > 0)
         {
@@ -144,7 +154,7 @@ public class LemmingManager : MonoBehaviour
             {
                 LemMove(param);
             }
-            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * Time.deltaTime);
+            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * speedFactor * (param + 1) * Time.deltaTime);
         }
         else if (lemmingMove.moveDir.x == 0 && lemmingMove.moveDir.y < 0)
         {
@@ -155,7 +165,7 @@ public class LemmingManager : MonoBehaviour
             {
                 LemMove(param);
             }
-            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * Time.deltaTime);
+            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * speedFactor * (param + 1) * Time.deltaTime);
         }
         else
         {
@@ -166,7 +176,7 @@ public class LemmingManager : MonoBehaviour
 
     private void LemMove(float param)
     {
-        target = transform.localPosition + new Vector3(param * lemmingMove.moveDir.x, param * lemmingMove.moveDir.y, 0);
+        target = new Vector3(distance * xPosition, -distance * yPosition, 0) + new Vector3(lemmingMove.moveDir.x * targetDistance, lemmingMove.moveDir.y * targetDistance, 0);
         haveInput = false;
     }
 

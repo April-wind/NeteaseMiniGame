@@ -95,4 +95,6 @@ MonoBehaviour:
   moveSpeed: 2
   returnSpeed: 0
   moveDir: {x: 0, y: 0, z: 0}
+  targetDistance: 0
+  speedFactor: 1
   distance: 2
