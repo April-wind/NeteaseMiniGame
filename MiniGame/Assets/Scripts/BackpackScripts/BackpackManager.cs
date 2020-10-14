@@ -13,6 +13,7 @@ public class BackpackManager : MonoBehaviour
     public GameObject emptySlot;
     public List<GameObject> slots = new List<GameObject>();//格子列表
 
+    public int gridNum;
 
     //单例
     void Awake()
@@ -26,6 +27,7 @@ public class BackpackManager : MonoBehaviour
     void Start()
     {
         backpack = new Backpack(9);
+        gridNum = 9;
         RefreshItem();
     }
 
