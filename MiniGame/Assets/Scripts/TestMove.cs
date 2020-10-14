@@ -11,6 +11,9 @@ public class TestMove : MonoBehaviour
     private float moveSpeed;
     //运动目标
     private Vector3 target;
+
+    //blood
+    public float bloodChange;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,5 +28,19 @@ public class TestMove : MonoBehaviour
         moveDir = new Vector3(h, v, 0);
         target = transform.position + moveSpeed * moveDir;
         transform.position = Vector3.Lerp(transform.position, target, Time.deltaTime * moveSpeed);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "Monster")
+        {
+            bloodChange = 40;
+            Debug.Log("你扣除了40点血");
+        }
+        if(collision.tag == "SnakeCost")
+        {
+            bloodChange = 20;
+            Debug.Log("你扣除了20点血");
+        }
     }
 }

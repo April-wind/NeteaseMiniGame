@@ -14,8 +14,13 @@ public class GetMine : MonoBehaviour
     private float progress;
 
     //UI
+    private GameObject sliderObj;
     private Slider slider;
-    //private 
+
+    //player
+    private GameObject player;
+    private TestMove testMove;
+     
     // Start is called before the first frame update
     void Start()
     {
@@ -25,13 +30,20 @@ public class GetMine : MonoBehaviour
         progress = 0;
 
         //ui
-        slider = this.transform.GetChild(0).GetChild(0).GetComponent<Slider>();
+        sliderObj = this.transform.GetChild(0).GetChild(0).gameObject;
+        slider = sliderObj.GetComponent<Slider>();
+
+        //player
+        player = GameObject.FindWithTag("Player");
+        //player运动的脚本
+        testMove = player.GetComponent<TestMove>();
     }
 
     // Update is called once per frame
     void Update()
     {
         MineProgress();
+        Interrupt();
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -55,6 +67,7 @@ public class GetMine : MonoBehaviour
     {
         if (canMine)
         {
+            sliderObj.SetActive(true);
             progress += Time.deltaTime;
             slider.value = progress;
             if(slider.value >= slider.maxValue)
@@ -65,6 +78,15 @@ public class GetMine : MonoBehaviour
 
             }
             //Debug.Log(progress);
+        }
+    }
+
+    void Interrupt()
+    {
+        if(testMove.moveDir.x != 0 || testMove.moveDir.y != 0)
+        {
+            canMine = false;
+            sliderObj.SetActive(false);
         }
     }
 }

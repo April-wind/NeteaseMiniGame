@@ -8,6 +8,8 @@ TagManager:
   - Monster
   - Border
   - Mine
+  - Snake
+  - SnakeCost
   layers:
   - Default
   - TransparentFX
