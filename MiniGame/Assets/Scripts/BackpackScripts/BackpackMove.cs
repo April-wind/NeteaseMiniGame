@@ -17,9 +17,16 @@ public class BackpackMove : MonoBehaviour
     //基础大小
     [SerializeField]
     private int BasicSize;
+
+    //格子一半大小
+    [SerializeField] private int gridSize = 50;
+
+    //旅鼠数量脚本
     public LemmingSumControl lemmingSumControl;
+    public BoxCollider2D boxCollider2D;
     void Start()
     {
+        //摄像机初始大小
         BasicSize = 450;
     }
 
@@ -31,13 +38,21 @@ public class BackpackMove : MonoBehaviour
     }
     private void CameraSizeChange()
     {
+        //其实应该是双摄原始大小的商作为修正因子,但是主摄的BasicSize是private的
         scaleUICamera.orthographicSize = (BasicSize / 5) * mainCamera.orthographicSize;
     }
     private void BackpackFollow()
     {
-        target = Camera.main.WorldToScreenPoint(lemming.transform.position);
+        //得到目标的屏幕坐标
+        //target = Camera.main.WorldToScreenPoint(lemming.transform.position);
+        target = Camera.main.WorldToScreenPoint(new Vector3(lemming.transform.position.x + boxCollider2D.offset.x, lemming.transform.position.y + boxCollider2D.offset.y, 0));
+        //将其屏幕坐标转化为该摄像机下的世界坐标
         target = scaleUICamera.ScreenToWorldPoint(target);
-        this.transform.position = target;
+        //x,y方向的中心修正值
+        int yAdd = Mathf.CeilToInt(Mathf.Sqrt(lemmingSumControl.LemmingNum)) * gridSize;
+        int xAdd = 350 + yAdd;
+        //同步移动
+        this.transform.position = new Vector3(target.x - xAdd, target.y + yAdd, target.z);
     }
     public void GridNumCorrect()
     {

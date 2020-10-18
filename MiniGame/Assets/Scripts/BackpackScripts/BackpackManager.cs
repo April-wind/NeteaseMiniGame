@@ -12,8 +12,7 @@ public class BackpackManager : MonoBehaviour
     public GameObject slotGrid;//一堆格子,UI意义上的"背包"
     public GameObject emptySlot;
     public List<GameObject> slots = new List<GameObject>();//格子列表
-
-    public int gridNum;
+    public int gridNum;//格子个数
 
     //单例
     void Awake()
