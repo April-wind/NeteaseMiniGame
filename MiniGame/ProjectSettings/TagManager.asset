@@ -7,9 +7,7 @@ TagManager:
   - Target
   - Monster
   - Border
-  - Mine
-  - Snake
-  - SnakeCost
+  - ScaleUICamera
   layers:
   - Default
   - TransparentFX
@@ -20,7 +18,7 @@ TagManager:
   - 
   - 
   - Border
-  - Mine
+  - ScaleUI
   - 
   - 
   - 
