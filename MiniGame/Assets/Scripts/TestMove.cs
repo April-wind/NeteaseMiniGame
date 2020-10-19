@@ -12,7 +12,7 @@ public class TestMove : MonoBehaviour
     //运动目标
     private Vector3 target;
 
-    //blood
+    //blood,用于计算血量的削减
     public float bloodChange;
     // Start is called before the first frame update
     void Start()
@@ -42,5 +42,6 @@ public class TestMove : MonoBehaviour
             bloodChange = 20;
             Debug.Log("你扣除了20点血");
         }
+        //猫头鹰扣血
     }
 }

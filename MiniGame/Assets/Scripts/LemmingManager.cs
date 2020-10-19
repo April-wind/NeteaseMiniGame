@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using UnityEngine;
 
 public class LemmingManager : MonoBehaviour
@@ -42,6 +43,7 @@ public class LemmingManager : MonoBehaviour
     private GameObject player;
     private LemmingMove lemmingMove;
     private LemmingSumControl lemmingSumControl;
+    private SpriteRenderer spriteRenderer;
 
     public void GetPosition(float xPos, float yPos)
     {
@@ -60,6 +62,7 @@ public class LemmingManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         lemmingMove = player.GetComponent<LemmingMove>();
         lemmingSumControl = GameObject.FindWithTag("GameController").GetComponent<LemmingSumControl>();
+        spriteRenderer = this.GetComponent<SpriteRenderer>();
 
         //dir
         targetDistance = 5.0f;
@@ -88,7 +91,14 @@ public class LemmingManager : MonoBehaviour
             {
                 LemMove(param);
             }
+             
             this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * (param + 1) * Time.deltaTime);
+
+            //旋转
+            spriteRenderer.flipX = true;
+            spriteRenderer.flipY = false;
+            this.transform.rotation = Quaternion.Euler(0, 0, 0);
+            this.GetComponent<Animator>().speed = 1;
         }
         else if (lemmingMove.moveDir.x > 0 && lemmingMove.moveDir.y < 0)
         {
@@ -100,6 +110,12 @@ public class LemmingManager : MonoBehaviour
                 LemMove(param);
             }
             this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * (param + 1) * Time.deltaTime);
+
+            //旋转
+            spriteRenderer.flipX = true;
+            spriteRenderer.flipY = false;
+            this.transform.rotation = Quaternion.Euler(0, 0, -90);
+            this.GetComponent<Animator>().speed = 1;
         }
         else if (lemmingMove.moveDir.x < 0 && lemmingMove.moveDir.y > 0)
         {
@@ -111,6 +127,12 @@ public class LemmingManager : MonoBehaviour
                 LemMove(param);
             }
             this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * speedFactor * (param + 1) * Time.deltaTime);
+
+            //旋转
+            spriteRenderer.flipX = false;
+            spriteRenderer.flipY = false;
+            this.transform.rotation = Quaternion.Euler(0, 0, 0);
+            this.GetComponent<Animator>().speed = 1;
         }
         else if (lemmingMove.moveDir.x < 0 && lemmingMove.moveDir.y < 0)
         {
@@ -122,6 +144,12 @@ public class LemmingManager : MonoBehaviour
                 LemMove(param);
             }
             this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * speedFactor * (param + 1) * Time.deltaTime);
+
+            //旋转
+            spriteRenderer.flipX = false;
+            spriteRenderer.flipY = false;
+            this.transform.rotation = Quaternion.Euler(0, 0, 90);
+            this.GetComponent<Animator>().speed = 1;
         }
         else if (lemmingMove.moveDir.x < 0 && lemmingMove.moveDir.y == 0)
         {
@@ -133,6 +161,12 @@ public class LemmingManager : MonoBehaviour
                 LemMove(param);
             }
             this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * speedFactor * (param + 1) * Time.deltaTime);
+
+            //旋转
+            spriteRenderer.flipX = false;
+            spriteRenderer.flipY = false;
+            this.transform.rotation = Quaternion.Euler(0, 0, 45);
+            this.GetComponent<Animator>().speed = 1;
         }
         else if (lemmingMove.moveDir.x > 0 && lemmingMove.moveDir.y == 0)
         {
@@ -144,6 +178,12 @@ public class LemmingManager : MonoBehaviour
                 LemMove(param);
             }
             this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * speedFactor * (param + 1) * Time.deltaTime);
+
+            //旋转
+            spriteRenderer.flipX = true;
+            spriteRenderer.flipY = false;
+            this.transform.rotation = Quaternion.Euler(0, 0, -45);
+            this.GetComponent<Animator>().speed = 1;
         }
         else if (lemmingMove.moveDir.x == 0 && lemmingMove.moveDir.y > 0)
         {
@@ -155,6 +195,12 @@ public class LemmingManager : MonoBehaviour
                 LemMove(param);
             }
             this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * speedFactor * (param + 1) * Time.deltaTime);
+
+            //旋转
+            spriteRenderer.flipX = false;
+            spriteRenderer.flipY = false;
+            this.transform.rotation = Quaternion.Euler(0, 0, -45);
+            this.GetComponent<Animator>().speed = 1;
         }
         else if (lemmingMove.moveDir.x == 0 && lemmingMove.moveDir.y < 0)
         {
@@ -166,11 +212,19 @@ public class LemmingManager : MonoBehaviour
                 LemMove(param);
             }
             this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * speedFactor * (param + 1) * Time.deltaTime);
+
+            //旋转
+            spriteRenderer.flipX = false;
+            spriteRenderer.flipY = true;
+            this.transform.rotation = Quaternion.Euler(0, 0, 45);
+            this.GetComponent<Animator>().speed = 1;
         }
         else
         {
             this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, new Vector3(distance * xPosition, -1 * distance * yPosition,
                 -1), returnSpeed * Time.deltaTime);
+
+            this.GetComponent<Animator>().speed = 0;
         }
     }
 

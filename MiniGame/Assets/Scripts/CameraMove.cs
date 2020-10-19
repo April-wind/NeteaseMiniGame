@@ -13,7 +13,7 @@ public class CameraMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        followSpeed = 10.0f;
+        followSpeed = 20.0f;
     }
 
     // Update is called once per frame
