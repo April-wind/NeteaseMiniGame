@@ -12,4 +12,7 @@ public class Item : ScriptableObject
     public int itemHeld;//持有数量
     public int width;//宽
     public int height;//高
+    public virtual void use(){
+        ;
+    }//使用效果
 }

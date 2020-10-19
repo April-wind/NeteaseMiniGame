@@ -80,4 +80,10 @@ public class BackpackManager : MonoBehaviour
         instance.backpack.GridReduction();
         RefreshItem();
     }
+    public static void UseItem(int x,int y)
+    {
+        //instance.myInventory.itemList[instance.backpack.data[x,y]].use();
+        instance.backpack.ItemReduction(x,y);
+        RefreshItem();
+    }
 }

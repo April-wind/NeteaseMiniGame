@@ -8,6 +8,10 @@ TagManager:
   - Monster
   - Border
   - ScaleUICamera
+  - SnakeCost
+  - Mine
+  - Snake
+  - Eagle
   layers:
   - Default
   - TransparentFX
