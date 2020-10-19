@@ -33,6 +33,35 @@ public class foodQuantity : MonoBehaviour
     public void HealthAutoReduction()
     {
         //测试用,等到用正式的"增加""减少"函数时再修改
+        health -= (float)(0.001 * number);
+        indicatorTrans.GetComponent<Text>().text = ((int)health).ToString() + "%";
+        processTrans.GetComponent<Image>().fillAmount = health / 100.0f;
+        if (health >= 30 && health < 50)
+        {
+            timer -= 2 * Time.deltaTime;
+        }
+
+        if (health >= 10 && health < 30)
+        {
+            timer -= 5 * Time.deltaTime;
+        }
+
+        if (health < 10)
+        {
+            timer -= 10 * Time.deltaTime;
+        }
+
+        if (health <= 0)
+        {
+            health = 0;
+            //GameOver();
+        }
+
+        if (timer <= 0)
+        {
+            number -= (int)(0.1 * number);
+            timer = 2.0f;
+        }
 
     }
 }

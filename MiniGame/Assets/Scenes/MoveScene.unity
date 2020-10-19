@@ -202,12 +202,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 28099273}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a59a699f0fbe13347af8f07d329b4c42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   followTarget: {fileID: 1344155853}
+  followSpeed: 0
 --- !u!1 &29556045
 GameObject:
   m_ObjectHideFlags: 0
@@ -537,6 +538,8 @@ MonoBehaviour:
   BasicSize: 0
   gridSize: 50
   lemmingSumControl: {fileID: 426975183}
+  scaleFactor: 0.62
+  boxCollider2D: {fileID: 1344155855}
 --- !u!1 &697686636
 GameObject:
   m_ObjectHideFlags: 0

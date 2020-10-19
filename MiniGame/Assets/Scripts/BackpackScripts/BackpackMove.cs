@@ -23,6 +23,10 @@ public class BackpackMove : MonoBehaviour
 
     //旅鼠数量脚本
     public LemmingSumControl lemmingSumControl;
+    //缩放因子
+    [SerializeField]
+    private float scaleFactor = 0.62f;
+    //旅鼠碰撞体
     public BoxCollider2D boxCollider2D;
     void Start()
     {
@@ -39,7 +43,7 @@ public class BackpackMove : MonoBehaviour
     private void CameraSizeChange()
     {
         //其实应该是双摄原始大小的商作为修正因子,但是主摄的BasicSize是private的
-        scaleUICamera.orthographicSize = (BasicSize / 5) * mainCamera.orthographicSize;
+        scaleUICamera.orthographicSize = (BasicSize / 5) * mainCamera.orthographicSize * scaleFactor;
     }
     private void BackpackFollow()
     {
@@ -49,8 +53,13 @@ public class BackpackMove : MonoBehaviour
         //将其屏幕坐标转化为该摄像机下的世界坐标
         target = scaleUICamera.ScreenToWorldPoint(target);
         //x,y方向的中心修正值
+        //Mathf.CeilToInt(Mathf.Sqrt(lemmingSumControl.LemmingNum-Mathf.CeilToInt(Mathf.Sqrt(lemmingSumControl.LemmingNum))))
         int yAdd = Mathf.CeilToInt(Mathf.Sqrt(lemmingSumControl.LemmingNum)) * gridSize;
         int xAdd = 350 + yAdd;
+        if (lemmingSumControl.LemmingNum != 1 && Mathf.CeilToInt(Mathf.Sqrt(lemmingSumControl.LemmingNum - Mathf.Sqrt(lemmingSumControl.LemmingNum))) != Mathf.CeilToInt(Mathf.Sqrt(lemmingSumControl.LemmingNum)))
+        {
+            yAdd -= 50;
+        }
         //同步移动
         this.transform.position = new Vector3(target.x - xAdd, target.y + yAdd, target.z);
     }
