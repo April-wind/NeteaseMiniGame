@@ -59,6 +59,9 @@ public class LemmingSumControl : MonoBehaviour
     //增加的情况
     public int situation;
     // Start is called before the first frame update
+    void Awake(){
+        _instance = this;
+    }
     void Start()
     {
         

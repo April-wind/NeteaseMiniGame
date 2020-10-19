@@ -22,8 +22,9 @@ public class foodQuantity : MonoBehaviour
 
     void Update()
     {
-        if (BackpackManager.instance.gridNum > 0)
+        if (BackpackManager.instance.gridNum > 0){
             HealthControl();
+        }
     }
 
     public void HealthControl()
@@ -31,6 +32,7 @@ public class foodQuantity : MonoBehaviour
         float subtractionFactor = Mathf.CeilToInt(Mathf.Sqrt(BackpackManager.instance.gridNum)) * 0.0005f;
         //health -= subtractionFactor;
         health = BackpackManager.instance.gridNum;
+        LemmingSumControl._Instance.lemmingNumTrue = BackpackManager.instance.gridNum;
         counter += subtractionFactor;
         indicatorTrans.GetComponent<Text>().text = ((int)health).ToString() + "只";
         processTrans.GetComponent<Image>().fillAmount = health / 100.0f;

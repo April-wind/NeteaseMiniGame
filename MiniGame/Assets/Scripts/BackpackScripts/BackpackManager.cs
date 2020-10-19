@@ -27,6 +27,7 @@ public class BackpackManager : MonoBehaviour
     {
         backpack = new Backpack(9);
         gridNum = 9;
+        //LemmingSumControl._Instance.lemmingNumTrue = gridNum;
         RefreshItem();
     }
 

@@ -74,6 +74,7 @@ public class GetMine : MonoBehaviour
             {
                 slider.value = slider.maxValue;
                 Debug.Log(this.name + "开采成功");
+                Destroy(gameObject,0.5f);
                 //TODO
 
             }

@@ -193,6 +193,7 @@ public class LemmingMove : MonoBehaviour
         {
             bloodChange = 40;
             Debug.Log("你扣除了40点血");
+            Destroy(collision.gameObject,0.5f);
         }
         if (collision.tag == "SnakeCost")
         {
