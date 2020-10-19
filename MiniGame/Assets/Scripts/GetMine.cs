@@ -19,7 +19,7 @@ public class GetMine : MonoBehaviour
 
     //player
     private GameObject player;
-    private TestMove testMove;
+    private LemmingMove testMove;
      
     // Start is called before the first frame update
     void Start()
@@ -36,7 +36,7 @@ public class GetMine : MonoBehaviour
         //player
         player = GameObject.FindWithTag("Player");
         //player运动的脚本
-        testMove = player.GetComponent<TestMove>();
+        testMove = player.GetComponent<LemmingMove>();
     }
 
     // Update is called once per frame

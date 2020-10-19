@@ -36,6 +36,7 @@ public class DetectOther : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
+            Debug.Log(222);
             if (FixedPathAI)
                 FixedPathAI.state = State.Idle;
             if (RandomPathAI)

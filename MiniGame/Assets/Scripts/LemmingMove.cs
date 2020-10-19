@@ -37,6 +37,9 @@ public class LemmingMove : MonoBehaviour
     private BoxCollider2D boxCollider2D;
     //碰撞盒收缩速度
     private float boxChangeSpeed;
+
+    //blood,用于计算血量的削减
+    public float bloodChange;
     // Start is called before the first frame update
     void Start()
     {
@@ -170,5 +173,19 @@ public class LemmingMove : MonoBehaviour
                     );
             }
         }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Monster")
+        {
+            bloodChange = 40;
+            Debug.Log("你扣除了40点血");
+        }
+        if (collision.tag == "SnakeCost")
+        {
+            bloodChange = 20;
+            Debug.Log("你扣除了20点血");
+        }
+        //猫头鹰扣血
     }
 }

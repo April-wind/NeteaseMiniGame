@@ -36,6 +36,8 @@ public class RandomPathAI : MonoBehaviour
     //计时器
     private float idletimer;
     private float avoidtimer;
+    private float hearingTimer;
+    public float hearingInterval;
     //随机数
     private int randNum;
     //是否重新选取随机数
@@ -67,6 +69,7 @@ public class RandomPathAI : MonoBehaviour
         //
         idletimer = 2.0f;
         avoidtimer = 0.0f;
+        hearingTimer = hearingInterval;
 
         //rotate
         rotateTime = 0;
@@ -81,10 +84,15 @@ public class RandomPathAI : MonoBehaviour
     {
 
         RaysDetection(moveDir);
+        //适时唤醒AI听力
+        InvokeHearing();
         //Debug.Log(moveDir + "moveDir");
         switch (state)
         {
             case State.Idle:
+                //恢复听力
+                //this.transform.GetChild(0).GetComponent<CircleCollider2D>().enabled = true;
+
                 idletimer += Time.deltaTime;
                 if (idletimer > moveTime || canSrand)
                 {
@@ -98,13 +106,21 @@ public class RandomPathAI : MonoBehaviour
                 break;
 
             case State.Track:
+                idletimer = 0;
+                avoidtimer = 0;
                 Tracking(player);
                 break;
 
             case State.AvoidWall:
-                avoidtimer += Time.deltaTime;
-                if (avoidtimer > 1)
+                if(lastState == State.Track)
                 {
+                    hearingTimer = 0;
+                    this.transform.GetChild(0).GetComponent<CircleCollider2D>().enabled = false;
+                }
+                avoidtimer += Time.deltaTime;
+                if (avoidtimer > 2)
+                {
+                    
                     state = State.Idle;
                     avoidtimer = 0;
                     idletimer = 0;
@@ -116,6 +132,10 @@ public class RandomPathAI : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 射线检测提前避免墙壁
+    /// </summary>
+    /// <param name="moveDir"></param>
     private void RaysDetection(Vector2 moveDir)
     {
         
@@ -129,7 +149,7 @@ public class RandomPathAI : MonoBehaviour
             rotateTime = 0;
             canSrand = true;
             state = State.AvoidWall;
-            lastState = State.AvoidWall;
+
             curMoveDir = moveDir;
             Vector3 dir = new Vector3(ray.direction.x, ray.direction.y, 0);
             Vector3 wall = new Vector3((info.collider.gameObject.GetComponent<EdgeCollider2D>().points[0] - info.collider.gameObject.GetComponent<EdgeCollider2D>().points[1]).x,
@@ -159,13 +179,17 @@ public class RandomPathAI : MonoBehaviour
 
             UnityEngine.Debug.DrawRay(this.transform.position, curMoveDir, Color.red);
         }
+    }
+
+    private void InvokeHearing()
+    {
+        if(hearingTimer < hearingInterval)
+        {
+            hearingTimer += Time.deltaTime;
+        }
         else
         {
-            if(lastState == State.AvoidWall)
-            {
-                //state = State.Idle;
-                //lastState = State.Idle;
-            }
+            this.transform.GetChild(0).GetComponent<CircleCollider2D>().enabled = true;
         }
     }
 
@@ -176,6 +200,8 @@ public class RandomPathAI : MonoBehaviour
     private void Idleing(int num)
     {
         //if(info.collider.)
+        lastState = State.Idle;
+
         this.transform.rotation = Quaternion.Euler(0, 0, num * 45 * (-1));
         moveDir = new Vector2(Mathf.Cos((3 - num) * 45 * Mathf.Deg2Rad), Mathf.Sin((3 - num) * 45 * Mathf.Deg2Rad));
         this.transform.Translate(moveDir.normalized * Time.deltaTime * idleSpeed, Space.World);
@@ -187,6 +213,8 @@ public class RandomPathAI : MonoBehaviour
     /// <param name="player"></param>
     private void Tracking(GameObject player)
     {
+        lastState = State.Track;
+
         moveDir = (player.transform.position - this.transform.position);
         //有一定距离，则向主角移动
         if (moveDir.magnitude >= 0.5f)
@@ -203,6 +231,8 @@ public class RandomPathAI : MonoBehaviour
 
     private void AvoidWalling()
     {
+        lastState = State.AvoidWall;
+
         float angle = Vector3.SignedAngle(moveDir, curMoveDir, Vector3.forward);
         if (rotateTime == 0)
         {
