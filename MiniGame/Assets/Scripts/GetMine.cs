@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GetMine : MonoBehaviour
 {
-    public string name;
+    public int ID;
     public LayerMask layer; 
 
     //可以开采
@@ -54,7 +54,7 @@ public class GetMine : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.back, 5f,layer);
-                if(hit.collider.tag == "Mine")
+                if(hit && hit.collider.tag == "Mine")
                 {
                     Debug.Log("Click");
                     canMine = true;

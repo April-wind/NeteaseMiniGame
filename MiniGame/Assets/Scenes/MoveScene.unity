@@ -352,6 +352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lemmingNum: 0
+  lemmingNumTrue: 9
   placeLemming: 0
   lemmingInstance: {fileID: 8460545671024499022, guid: 4f3b83e1c14d23141b2c52cc541b4393,
     type: 3}
@@ -968,6 +969,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3515914169988966415, guid: 44298008ebd78f64fadf682215f5e61f,
+        type: 3}
+      propertyPath: ID
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 44298008ebd78f64fadf682215f5e61f, type: 3}

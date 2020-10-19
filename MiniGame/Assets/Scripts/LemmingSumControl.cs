@@ -33,6 +33,10 @@ public class LemmingSumControl : MonoBehaviour
         }
     }
 
+    //旅鼠真实总数
+    [SerializeField]
+    public int lemmingNumTrue;
+
     //当前放置的旅鼠个数
     [SerializeField]
     private int placeLemming;
@@ -57,6 +61,9 @@ public class LemmingSumControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+        //Debug.Log(BackpackManager.instance.gridNum);
+        lemmingNumTrue = 0;
         lemmingNum = 0;
         placeLemming = 0;
         newSquare = null;
@@ -72,57 +79,77 @@ public class LemmingSumControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            lemmingNum++;
-        }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            lemmingNum--;
-            placeLemming--;
-
-            list.RemoveAt(list.Count - 1);
-            Destroy(lemmingObj[lemmingObj.Count - 1]);
-            lemmingObj.RemoveAt(lemmingObj.Count - 1);
-        }
         if (lemmingNum < 0)
         {
             lemmingNum = 0;
         }
 
-        while (placeLemming < lemmingNum)
+        while (lemmingNum < lemmingNumTrue)
         {
+            lemmingNum++;
+            while (placeLemming < lemmingNum)
+            {
+                int sqrtNum = (int)Math.Sqrt(lemmingNum);
+                int remaining = lemmingNum - sqrtNum * sqrtNum;
+
+                if (remaining == 0)
+                {
+                    IndexX = sqrtNum - 1;
+                    IndexY = sqrtNum - 1;
+
+                    CreateInstance(IndexX, IndexY);
+
+                    situation = 1;
+                    Debug.Log(5);
+                }
+                else if (remaining <= sqrtNum)
+                {
+                    IndexX = sqrtNum;
+                    IndexY = remaining - 1;
+
+                    CreateInstance(IndexX, IndexY);
+
+                    situation = 2;
+                    Debug.Log(6);
+                }
+                else if (remaining <= 2 * sqrtNum)
+                {
+                    IndexX = remaining - sqrtNum - 1;
+                    IndexY = sqrtNum;
+
+                    CreateInstance(IndexX, IndexY);
+
+                    situation = 3;
+                }
+            }
+            
+        }
+        while (lemmingNum > lemmingNumTrue && lemmingNumTrue > 0)
+        {
+            lemmingNum--;
+            placeLemming--;
+
             int sqrtNum = (int)Math.Sqrt(lemmingNum);
             int remaining = lemmingNum - sqrtNum * sqrtNum;
 
             if (remaining == 0)
-            {
-                IndexX = sqrtNum - 1;
-                IndexY = sqrtNum - 1;
-
-                CreateInstance(IndexX, IndexY);
-
-                situation = 1;
+            {              
+                situation = 1;                
             }
             else if (remaining <= sqrtNum)
-            {
-                IndexX = sqrtNum;
-                IndexY = remaining - 1;
-
-                CreateInstance(IndexX, IndexY);
-
+            {                
                 situation = 2;
             }
             else if (remaining <= 2 * sqrtNum)
-            {
-                IndexX = remaining - sqrtNum - 1;
-                IndexY = sqrtNum;
-
-                CreateInstance(IndexX, IndexY);
-
+            {               
                 situation = 3;
             }
+
+            list.RemoveAt(list.Count - 1);
+            Destroy(lemmingObj[lemmingObj.Count - 1]);
+            lemmingObj.RemoveAt(lemmingObj.Count - 1);
         }
+
     }
 
     private void CreateInstance(int IndexX, int IndexY)

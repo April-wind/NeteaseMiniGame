@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class LemmingMove : MonoBehaviour
 {
+    private static LemmingMove _instance;
+
+    public static LemmingMove _Instance
+    {
+        get { return _instance; }
+        set { _instance = value; }
+    }
+
     [SerializeField]
     public Vector3 moveDir;
 
@@ -43,7 +51,7 @@ public class LemmingMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        moveSpeed = 3.0f;
+        moveSpeed = 2.0f;
 
         childNum = 0;
 
@@ -76,6 +84,7 @@ public class LemmingMove : MonoBehaviour
 
     private void LateUpdate()
     {
+        //Debug.Log(childNum);
         //摄像机size更改
         if (lemmingSumControl.situation == 1 && childNum > 0)
         {
@@ -85,10 +94,13 @@ public class LemmingMove : MonoBehaviour
             //碰撞盒Size/Offset
             if (moveDir.x * moveDir.y <= 0)
             {
-                boxCollider2D.offset = new Vector2((transform.GetChild(0).localPosition.x + transform.GetChild(childNum - 1).localPosition.x) / 2,
-                    (transform.GetChild(0).localPosition.y + transform.GetChild(childNum - 1).localPosition.y) / 2);
+                int index1 = 0;
+                int index2 = childNum - 1;
+                Debug.Log(childNum);
+                boxCollider2D.offset = new Vector2((transform.GetChild(index1).localPosition.x + transform.GetChild(index2).localPosition.x) / 2,
+                    (transform.GetChild(index1).localPosition.y + transform.GetChild(index2).localPosition.y) / 2);
                 boxCollider2D.size = Vector2.Lerp(boxCollider2D.size,
-                    new Vector2((transform.GetChild(childNum - 1).localPosition.x - transform.GetChild(0).localPosition.x) + distance, (transform.GetChild(0).localPosition.y - transform.GetChild(childNum - 1).localPosition.y) + distance),
+                    new Vector2((transform.GetChild(index2).localPosition.x - transform.GetChild(index1).localPosition.x) + distance, (transform.GetChild(index1).localPosition.y - transform.GetChild(index2).localPosition.y) + distance),
                     Time.deltaTime * boxChangeSpeed
                     );
             }
@@ -113,6 +125,7 @@ public class LemmingMove : MonoBehaviour
             {
                 int index1 = 0;
                 int index2 = childNum - 1;
+                Debug.Log(index1 + " " + index2);
                 int index3 = (int)Mathf.Pow((int)Mathf.Sqrt(childNum), 2) - 1;
 
                 //碰撞盒Size/Offset
@@ -187,5 +200,10 @@ public class LemmingMove : MonoBehaviour
             Debug.Log("你扣除了20点血");
         }
         //猫头鹰扣血
+        if(collision.tag == "Eagle")
+        {
+            bloodChange = 30;
+            Debug.Log("你扣除了30点血");
+        }
     }
 }
