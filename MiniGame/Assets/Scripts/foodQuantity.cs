@@ -8,59 +8,42 @@ using UnityEngine.UI;
 
 public class foodQuantity : MonoBehaviour
 {
-    public int number;//种群数量
     public float health;//饥饿条
-    public float healthMax;//饥饿条上限
-    public float timer = 100.0f;
+    public float counter = 0;//计数器
     public Transform processTrans;//进度条
     public Transform indicatorTrans;//文字框
-    private LemmingSumControl lemmingSumControl;//旅鼠数量脚本
+    //private LemmingSumControl lemmingSumControl;//旅鼠数量脚本
 
     void Start()
     {
-        lemmingSumControl = GameObject.FindWithTag("GameController").GetComponent<LemmingSumControl>();
+        health = BackpackManager.instance.gridNum;
+        // lemmingSumControl = GameObject.FindWithTag("GameController").GetComponent<LemmingSumControl>();
     }
 
     void Update()
     {
-        HealthAutoReduction();
+        if (BackpackManager.instance.gridNum > 0)
+            HealthControl();
     }
-    public void HealthIncrease()
+
+    public void HealthControl()
     {
-        healthMax += 1;
-        health += 1;
-    }
-    public void HealthAutoReduction()
-    {
-        //测试用,等到用正式的"增加""减少"函数时再修改
-        health -= (float)(0.001 * number);
-        indicatorTrans.GetComponent<Text>().text = ((int)health).ToString() + "%";
+        float subtractionFactor = Mathf.CeilToInt(Mathf.Sqrt(BackpackManager.instance.gridNum)) * 0.0005f;
+        //health -= subtractionFactor;
+        health = BackpackManager.instance.gridNum;
+        counter += subtractionFactor;
+        indicatorTrans.GetComponent<Text>().text = ((int)health).ToString() + "只";
         processTrans.GetComponent<Image>().fillAmount = health / 100.0f;
-        if (health >= 30 && health < 50)
+        if (counter > 1)
         {
-            timer -= 2 * Time.deltaTime;
-        }
-
-        if (health >= 10 && health < 30)
-        {
-            timer -= 5 * Time.deltaTime;
-        }
-
-        if (health < 10)
-        {
-            timer -= 10 * Time.deltaTime;
-        }
-
-        if (health <= 0)
-        {
-            health = 0;
-            //GameOver();
-        }
-
-        if (timer <= 0)
-        {
-            number -= (int)(0.1 * number);
-            timer = 2.0f;
+            for (int i = 0; (i < (int)counter) && (BackpackManager.instance.gridNum > 0); i++)
+            {
+                Debug.Log(123);
+                BackpackManager.instance.backpack.GridReduction();
+                BackpackManager.instance.gridNum--;
+            }
+            BackpackManager.RefreshItem();
+            counter = 0;
         }
 
     }

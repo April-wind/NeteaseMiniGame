@@ -38,7 +38,7 @@ public class BackpackMove : MonoBehaviour
     {
         CameraSizeChange();
         BackpackFollow();
-        GridNumCorrect();
+        //GridNumCorrect();
     }
     private void CameraSizeChange()
     {
@@ -73,8 +73,6 @@ public class BackpackMove : MonoBehaviour
                 BackpackManager.instance.backpack.GridGeneration();
             BackpackManager.instance.gridNum = lemmingSumControl.LemmingNum;
             BackpackManager.RefreshItem();
-            Debug.Log(lemmingSumControl.LemmingNum);
-            Debug.Log(BackpackManager.instance.gridNum);
         }
         else if (lemmingSumControl.LemmingNum < BackpackManager.instance.gridNum)
         {
@@ -82,8 +80,6 @@ public class BackpackMove : MonoBehaviour
                 BackpackManager.instance.backpack.GridReduction();
             BackpackManager.instance.gridNum = lemmingSumControl.LemmingNum;
             BackpackManager.RefreshItem();
-            Debug.Log(lemmingSumControl.LemmingNum);
-            Debug.Log(BackpackManager.instance.gridNum);
         }
     }
 
