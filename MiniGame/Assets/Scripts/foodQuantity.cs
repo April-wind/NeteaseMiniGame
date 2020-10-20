@@ -40,7 +40,7 @@ public class foodQuantity : MonoBehaviour
         {
             for (int i = 0; (i < (int)counter) && (BackpackManager.instance.gridNum > 0); i++)
             {
-                Debug.Log(123);
+                //Debug.Log(123);
                 BackpackManager.instance.backpack.GridReduction();
                 BackpackManager.instance.gridNum--;
             }

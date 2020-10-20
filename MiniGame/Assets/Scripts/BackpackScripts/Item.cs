@@ -13,6 +13,7 @@ public class Item : ScriptableObject
     public int width;//宽
     public int height;//高
     public virtual void use(){
+        Debug.Log("使用了"+id+"号物品");
         ;
     }//使用效果
 }

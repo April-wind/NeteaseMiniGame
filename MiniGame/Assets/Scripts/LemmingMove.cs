@@ -96,7 +96,7 @@ public class LemmingMove : MonoBehaviour
             {
                 int index1 = 0;
                 int index2 = childNum - 1;
-                Debug.Log(childNum);
+                //Debug.Log(childNum);
                 boxCollider2D.offset = new Vector2((transform.GetChild(index1).localPosition.x + transform.GetChild(index2).localPosition.x) / 2,
                     (transform.GetChild(index1).localPosition.y + transform.GetChild(index2).localPosition.y) / 2);
                 boxCollider2D.size = Vector2.Lerp(boxCollider2D.size,
@@ -125,7 +125,7 @@ public class LemmingMove : MonoBehaviour
             {
                 int index1 = 0;
                 int index2 = childNum - 1;
-                Debug.Log(index1 + " " + index2);
+                //Debug.Log(index1 + " " + index2);
                 int index3 = (int)Mathf.Pow((int)Mathf.Sqrt(childNum), 2) - 1;
 
                 //碰撞盒Size/Offset

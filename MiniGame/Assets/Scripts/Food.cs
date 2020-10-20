@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[CreateAssetMenu(fileName = "New Food", menuName = "Backpack/New Food")]
 public class Food : Item
 {
     //补充的饥饿值
@@ -9,6 +11,9 @@ public class Food : Item
     public override void use()
     {
         BackpackManager.instance.gridNum += deltaHungryValue;
-        //LemmingSumControl._Instance.LemmingNumTrue += hungryValue;
+        for(int i = 0; i < deltaHungryValue;i++){
+            BackpackManager.instance.backpack.GridGeneration();
+        }
+        //LemmingSumControl._Instance.lemmingNumTrue += deltaHungryValue;
     }
 }
