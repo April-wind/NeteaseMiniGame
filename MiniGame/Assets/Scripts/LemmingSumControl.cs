@@ -103,7 +103,7 @@ public class LemmingSumControl : MonoBehaviour
                     CreateInstance(IndexX, IndexY);
 
                     situation = 1;
-                    Debug.Log(5);
+                    //Debug.Log(5);
                 }
                 else if (remaining <= sqrtNum)
                 {
@@ -113,7 +113,7 @@ public class LemmingSumControl : MonoBehaviour
                     CreateInstance(IndexX, IndexY);
 
                     situation = 2;
-                    Debug.Log(6);
+                    //Debug.Log(6);
                 }
                 else if (remaining <= 2 * sqrtNum)
                 {

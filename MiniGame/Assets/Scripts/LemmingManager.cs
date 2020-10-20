@@ -8,11 +8,11 @@ public class LemmingManager : MonoBehaviour
 {
     //移动速度
     [SerializeField]
-    private float moveSpeed;
+    public float moveSpeed;
     //归位速度
     [SerializeField]
-    private float returnSpeed;
-    private float returnSpeedSlow;
+    public float returnSpeed;
+    //private float returnSpeedSlow;
     //移动方向
     [SerializeField]
     private Vector3 moveDir;
@@ -24,7 +24,7 @@ public class LemmingManager : MonoBehaviour
     private float param;
     [SerializeField]
     //旅鼠相对移动的距离
-    private float targetDistance;
+    public float targetDistance;
     [SerializeField]
     //旅鼠的运动速度因子
     public float speedFactor;
@@ -65,13 +65,13 @@ public class LemmingManager : MonoBehaviour
         spriteRenderer = this.GetComponent<SpriteRenderer>();
 
         //dir
-        targetDistance = 5.0f;
+        //targetDistance = 5.0f;
         //speedFactor = 2.0f;
 
-        distance = 1.8f;
-        moveSpeed = 1.0f;
-        returnSpeed = 10.0f;
-        returnSpeedSlow = 2.0f;
+        //distance = 1.8f;
+        //moveSpeed = 1.0f;
+        //returnSpeed = 10.0f;
+        //returnSpeedSlow = 2.0f;
 
         PositionCheck(xPosition, yPosition);
 

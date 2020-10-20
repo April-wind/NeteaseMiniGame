@@ -49,6 +49,11 @@ public class LemmingMove : MonoBehaviour
     //blood,用于计算血量的削减
     public float bloodChange;
     // Start is called before the first frame update
+    private void Awake()
+    {
+        _instance = this;
+    }
+
     void Start()
     {
         moveSpeed = 2.0f;
@@ -79,11 +84,12 @@ public class LemmingMove : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, target, Time.deltaTime * moveSpeed);
 
         //更新子物体个数
-        childNum = transform.childCount;
+        //childNum = transform.childCount;
     }
 
     private void LateUpdate()
     {
+        childNum = transform.childCount;
         //Debug.Log(childNum);
         //摄像机size更改
         if (lemmingSumControl.situation == 1 && childNum > 0)
@@ -96,7 +102,7 @@ public class LemmingMove : MonoBehaviour
             {
                 int index1 = 0;
                 int index2 = childNum - 1;
-                Debug.Log(childNum);
+                //Debug.Log(childNum);
                 boxCollider2D.offset = new Vector2((transform.GetChild(index1).localPosition.x + transform.GetChild(index2).localPosition.x) / 2,
                     (transform.GetChild(index1).localPosition.y + transform.GetChild(index2).localPosition.y) / 2);
                 boxCollider2D.size = Vector2.Lerp(boxCollider2D.size,
@@ -162,7 +168,7 @@ public class LemmingMove : MonoBehaviour
                 int index1 = 0;
                 int index2 = (int)Mathf.Pow((int)Mathf.Sqrt(childNum), 2) - 1 + (int)Mathf.Sqrt(childNum);
                 int index3 = childNum - 1;
-
+                Debug.Log(index1 + " " + index2);
                 //碰撞盒Size/Offset
                 boxCollider2D.offset = new Vector2((transform.GetChild(index1).localPosition.x + transform.GetChild(index2).localPosition.x) / 2,
                     (transform.GetChild(index1).localPosition.y + transform.GetChild(index3).localPosition.y) / 2);
