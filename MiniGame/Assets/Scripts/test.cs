@@ -34,7 +34,7 @@ public class test : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.X))
         {
-            BackpackManager.AddItem(5);
+            BackpackManager.AddItem(Random.Range(0, 5));
         }
         //显示/隐藏背包
         if (Input.GetKeyDown(KeyCode.I))

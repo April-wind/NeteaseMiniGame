@@ -48,7 +48,6 @@ public class BackpackManager : MonoBehaviour
                 instance.slots.Add(Instantiate(instance.emptySlot));
                 if (instance.backpack.data[i, j] == -1)
                 {
-                    instance.slots[tmp].GetComponent<Slot>().available = false;
                     instance.slots[tmp].transform.SetParent(instance.slotGrid.transform);//设置父物体
                     instance.slots[tmp].GetComponent<Slot>().SetUpSlot(null);
 
@@ -60,10 +59,11 @@ public class BackpackManager : MonoBehaviour
                     int y = instance.backpack.storeData[i, j].y;
                     if (i == x && j == y)
                     {
+                        instance.slots[tmp].GetComponent<Slot>().available = true;
                         instance.slots[tmp].GetComponent<Slot>().SetUpSlot(instance.myInventory.itemList[instance.backpack.data[i, j]]);//同步图片等物品信息
                     }
-                    // else
-                    //     instance.slots[tmp].GetComponent<Slot>().SetUpSlot(null);
+                    else
+                        instance.slots[tmp].GetComponent<Slot>().SetUpSlot(null);
                 }
                 tmp++;
             }
@@ -81,10 +81,10 @@ public class BackpackManager : MonoBehaviour
         instance.backpack.GridReduction();
         RefreshItem();
     }
-    public static void UseItem(int x,int y)
+    public static void UseItem(int x, int y)
     {
         //instance.myInventory.itemList[instance.backpack.data[x,y]].use();
-        instance.backpack.ItemReduction(x,y);
+        instance.backpack.ItemReduction(x, y);
         RefreshItem();
     }
 }
