@@ -11,6 +11,7 @@ public class ItemOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     public Inventory myInventory;
     private Vector2 addFactor;//(屏幕上)初始偏移向量
     public Camera scaleUICamera;
+    public Ray target;
     //private int currentItemID;//当前物品ID
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -23,11 +24,13 @@ public class ItemOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         addFactor = scaleUICamera.WorldToScreenPoint(transform.position) - new Vector3(eventData.position.x, eventData.position.y, 0);
         transform.position = eventData.position + addFactor;//物品和鼠标一起动
         GetComponent<CanvasGroup>().blocksRaycasts = false;//关掉手下这个物品遮挡鼠标射线
+        target = scaleUICamera.ScreenPointToRay(transform.position);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
         transform.position = eventData.position + addFactor;//物品和鼠标一起动
+        target = scaleUICamera.ScreenPointToRay(transform.position);
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -72,6 +75,7 @@ public class ItemOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         //         return;
         //     }
         // }
+
 
         Debug.Log(eventData.pointerCurrentRaycast.gameObject);
         //其他任何位置都归位
