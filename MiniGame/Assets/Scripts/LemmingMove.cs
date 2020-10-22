@@ -168,7 +168,7 @@ public class LemmingMove : MonoBehaviour
                 int index1 = 0;
                 int index2 = (int)Mathf.Pow((int)Mathf.Sqrt(childNum), 2) - 1 + (int)Mathf.Sqrt(childNum);
                 int index3 = childNum - 1;
-                Debug.Log(index1 + " " + index2);
+                //Debug.Log(index1 + " " + index2);
                 //碰撞盒Size/Offset
                 boxCollider2D.offset = new Vector2((transform.GetChild(index1).localPosition.x + transform.GetChild(index2).localPosition.x) / 2,
                     (transform.GetChild(index1).localPosition.y + transform.GetChild(index3).localPosition.y) / 2);
