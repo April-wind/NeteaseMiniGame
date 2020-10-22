@@ -8,10 +8,11 @@ public class Slot : MonoBehaviour
     public Item slotItem;//获取到Item
     public Image slotImage;//Item的图片
     public GameObject itemInSlot;
-    //public float transparency;//透明度
-    public bool available = true;
+
+    public bool available = false;
     private float time;
-    void Start(){
+    void Start()
+    {
         time = Time.time;
     }
 
@@ -23,26 +24,30 @@ public class Slot : MonoBehaviour
             itemInSlot.SetActive(false);
             return;
         }
-        itemInSlot.GetComponent<ItemOnDrag>().enabled = available;
+        itemInSlot.GetComponent<CanvasGroup>().blocksRaycasts = available;//关掉遮挡鼠标射线
+
         //有物品则做赋值
         slotImage.sprite = item.itemImage;
         //图片显示为原大小
         itemInSlot.GetComponent<RectTransform>().sizeDelta = new Vector2(item.width * itemInSlot.GetComponent<RectTransform>().sizeDelta.x, item.height * itemInSlot.GetComponent<RectTransform>().sizeDelta.y);
         // itemInSlot.transform.SetParent(transform.parent.parent.parent);
         // itemInSlot.transform.position = transform.position;
-   }
-   void OnMouseDown()
-   {
+    }
+
+    //待删除,现在删了过不了编译emm
+    void OnMouseDown()
+    {
         Debug.Log("1233");
         if (Time.time - time <= 0.3f)
         {
-            if(available){
+            if (available)
+            {
                 slotItem.use();
-                BackpackManager.UseItem((int)((transform.position.x - 50) / 100),(int)((-transform.position.y - 50) / 100));
+                BackpackManager.UseItem((int)((transform.position.x - 50) / 100), (int)((-transform.position.y - 50) / 100));
                 Debug.Log((int)((transform.position.x - 50) / 100));
                 Debug.Log((int)((-transform.position.y - 50) / 100));
             }
         }
         time = Time.time;
-   }
+    }
 }

@@ -9,20 +9,28 @@ public class ItemOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     //要实现这个,还得挂载一个组件:CanvasGroup
     public Transform originalParent;
     public Inventory myInventory;
+    private Vector2 addFactor;//(屏幕上)初始偏移向量
+    public Camera scaleUICamera;
+    public Ray target;
     //private int currentItemID;//当前物品ID
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        scaleUICamera = GameObject.FindWithTag("ScaleUICamera").GetComponent<Camera>();
         originalParent = transform.parent;//被拖拽物品原来的父物体
         //currentItemID = originalParent.GetComponent<Slot>().slotID;
         transform.SetParent(transform.parent.parent);//与父同级,这样就能渲染在最上层了
-        transform.position = eventData.position;//物品和鼠标一起动
+
+        addFactor = scaleUICamera.WorldToScreenPoint(transform.position) - new Vector3(eventData.position.x, eventData.position.y, 0);
+        transform.position = eventData.position + addFactor;//物品和鼠标一起动
         GetComponent<CanvasGroup>().blocksRaycasts = false;//关掉手下这个物品遮挡鼠标射线
+        target = scaleUICamera.ScreenPointToRay(transform.position);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        transform.position = eventData.position;//物品和鼠标一起动
+        transform.position = eventData.position + addFactor;//物品和鼠标一起动
+        target = scaleUICamera.ScreenPointToRay(transform.position);
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -67,6 +75,7 @@ public class ItemOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         //         return;
         //     }
         // }
+
 
         Debug.Log(eventData.pointerCurrentRaycast.gameObject);
         //其他任何位置都归位

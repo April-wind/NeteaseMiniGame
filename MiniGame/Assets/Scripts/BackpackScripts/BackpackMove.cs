@@ -48,12 +48,10 @@ public class BackpackMove : MonoBehaviour
     private void BackpackFollow()
     {
         //得到目标的屏幕坐标
-        //target = Camera.main.WorldToScreenPoint(lemming.transform.position);
         target = Camera.main.WorldToScreenPoint(new Vector3(lemming.transform.position.x + boxCollider2D.offset.x, lemming.transform.position.y + boxCollider2D.offset.y, 0));
         //将其屏幕坐标转化为该摄像机下的世界坐标
         target = scaleUICamera.ScreenToWorldPoint(target);
         //x,y方向的中心修正值
-        //Mathf.CeilToInt(Mathf.Sqrt(lemmingSumControl.LemmingNum-Mathf.CeilToInt(Mathf.Sqrt(lemmingSumControl.LemmingNum))))
         int yAdd = Mathf.CeilToInt(Mathf.Sqrt(lemmingSumControl.LemmingNum)) * gridSize;
         int xAdd = 350 + yAdd;
         if (lemmingSumControl.LemmingNum != 1 && Mathf.CeilToInt(Mathf.Sqrt(lemmingSumControl.LemmingNum - Mathf.Sqrt(lemmingSumControl.LemmingNum))) != Mathf.CeilToInt(Mathf.Sqrt(lemmingSumControl.LemmingNum)))
@@ -82,5 +80,4 @@ public class BackpackMove : MonoBehaviour
             BackpackManager.RefreshItem();
         }
     }
-
 }
