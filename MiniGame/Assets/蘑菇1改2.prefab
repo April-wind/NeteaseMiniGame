@@ -67,7 +67,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 30
+    m_FontSize: 40
     m_FontStyle: 3
     m_BestFit: 1
     m_MinSize: 3
@@ -253,6 +253,7 @@ GameObject:
   - component: {fileID: 3515914169988966409}
   - component: {fileID: 3515914169988966408}
   - component: {fileID: 3515914169988966415}
+  - component: {fileID: 677079370}
   m_Layer: 9
   m_Name: "\u8611\u83C71\u65392"
   m_TagString: Mine
@@ -361,10 +362,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3670ee5fef68ee14a9006f87149282f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: 1
+  ID: 5
   layer:
     serializedVersion: 2
     m_Bits: 512
+--- !u!114 &677079370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3515914169988966411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50ed8ed652d3f624eb2fad50ff42c1d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 960038598}
+  textAwakeSpeed: 0.02
 --- !u!1 &3515914170015382885
 GameObject:
   m_ObjectHideFlags: 0

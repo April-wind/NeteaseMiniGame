@@ -74,9 +74,11 @@ public class GetMine : MonoBehaviour
             {
                 slider.value = slider.maxValue;
                 Debug.Log(this.name + "开采成功");
-                Destroy(gameObject,0.5f);
-                //TODO
 
+                //该物体被开采成功
+                BackpackManager.AddItem(ID);
+                
+                Destroy(gameObject);
             }
             //Debug.Log(progress);
         }
