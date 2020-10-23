@@ -25,29 +25,15 @@ public class Slot : MonoBehaviour
             return;
         }
         itemInSlot.GetComponent<CanvasGroup>().blocksRaycasts = available;//关掉遮挡鼠标射线
-
         //有物品则做赋值
+        slotItem = item;
         slotImage.sprite = item.itemImage;
         //图片显示为原大小
         itemInSlot.GetComponent<RectTransform>().sizeDelta = new Vector2(item.width * itemInSlot.GetComponent<RectTransform>().sizeDelta.x, item.height * itemInSlot.GetComponent<RectTransform>().sizeDelta.y);
-        // itemInSlot.transform.SetParent(transform.parent.parent.parent);
-        // itemInSlot.transform.position = transform.position;
+        //碰撞器与图片全重叠
+        this.GetComponent<BoxCollider>().size = new Vector3(item.width * 100, item.height * 100, 1);
+        this.GetComponent<BoxCollider>().center = new Vector3((item.width - 1) * 50, -(item.height - 1) * 50, 0);
     }
 
-    //待删除,现在删了过不了编译emm
-    void OnMouseDown()
-    {
-        Debug.Log("1233");
-        if (Time.time - time <= 0.3f)
-        {
-            if (available)
-            {
-                slotItem.use();
-                BackpackManager.UseItem((int)((transform.position.x - 50) / 100), (int)((-transform.position.y - 50) / 100));
-                Debug.Log((int)((transform.position.x - 50) / 100));
-                Debug.Log((int)((-transform.position.y - 50) / 100));
-            }
-        }
-        time = Time.time;
-    }
+
 }
