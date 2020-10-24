@@ -8,23 +8,23 @@ public class Slot : MonoBehaviour
     public Item slotItem;//获取到Item
     public Image slotImage;//Item的图片
     public GameObject itemInSlot;
-
-    public bool available = false;
+    public Vector2 position = new Vector2(0, 0);
     private float time;
     void Start()
     {
         time = Time.time;
     }
 
-    public void SetUpSlot(Item item)
+    public void SetUpSlot(Item item, int x, int y)
     {
+        position = new Vector2(x, y);
         //无物体设为空格, 不显示itemInSlot
         if (item == null)
         {
             itemInSlot.SetActive(false);
             return;
         }
-        itemInSlot.GetComponent<CanvasGroup>().blocksRaycasts = available;//关掉遮挡鼠标射线
+
         //有物品则做赋值
         slotItem = item;
         slotImage.sprite = item.itemImage;

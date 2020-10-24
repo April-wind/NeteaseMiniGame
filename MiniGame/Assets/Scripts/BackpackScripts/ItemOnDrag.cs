@@ -25,7 +25,6 @@ public class ItemOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         addFactor = scaleUICamera.WorldToScreenPoint(transform.position) - new Vector3(eventData.position.x, eventData.position.y, 0);
         transform.position = eventData.position + addFactor;//物品和鼠标一起动
         GetComponent<CanvasGroup>().blocksRaycasts = false;//关掉手下这个物品遮挡鼠标射线
-        originalParent.GetComponent<BoxCollider>().enabled = false;//关闭碰撞器
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -39,7 +38,7 @@ public class ItemOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
             {
                 Debug.DrawRay(ori, new Vector3(0, 0, 1111), Color.yellow);
                 if (hit.collider.gameObject.GetComponent<Slot>().slotItem)
-                    Debug.Log("Did Hit " + hit.collider.gameObject.GetComponent<Slot>().slotItem.id);
+                    Debug.Log("物品" + hit.collider.gameObject.GetComponent<Slot>().slotItem.id + "在" + hit.collider.gameObject.GetComponent<Slot>().position);
                 else
                     Debug.Log("Did Hit " + hit.collider.gameObject);
             }

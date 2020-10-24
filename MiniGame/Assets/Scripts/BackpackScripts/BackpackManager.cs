@@ -46,24 +46,25 @@ public class BackpackManager : MonoBehaviour
             for (int j = 0; j < instance.backpack.data.GetLength(1); j++)
             {
                 instance.slots.Add(Instantiate(instance.emptySlot));
+                instance.slots[tmp].transform.SetParent(instance.slotGrid.transform);//设置父物体
                 if (instance.backpack.data[i, j] == -1)
                 {
-                    instance.slots[tmp].transform.SetParent(instance.slotGrid.transform);//设置父物体
-                    instance.slots[tmp].GetComponent<Slot>().SetUpSlot(null);
-
+                    instance.slots[tmp].GetComponent<Slot>().SetUpSlot(null, i, j);
                 }
                 else
                 {
-                    instance.slots[tmp].transform.SetParent(instance.slotGrid.transform);//设置父物体
                     int x = instance.backpack.storeData[i, j].x;
                     int y = instance.backpack.storeData[i, j].y;
+
                     if (i == x && j == y)
                     {
-                        instance.slots[tmp].GetComponent<Slot>().available = true;
-                        instance.slots[tmp].GetComponent<Slot>().SetUpSlot(instance.myInventory.itemList[instance.backpack.data[i, j]]);//同步图片等物品信息
+                        instance.slots[tmp].GetComponent<BoxCollider>().enabled = true;
+                        instance.slots[tmp].GetComponent<Slot>().SetUpSlot(instance.myInventory.itemList[instance.backpack.data[i, j]], i, j);//同步图片等物品信息
                     }
                     else
-                        instance.slots[tmp].GetComponent<Slot>().SetUpSlot(null);
+                    {
+                        instance.slots[tmp].GetComponent<Slot>().SetUpSlot(null, i, j);
+                    }
                 }
                 tmp++;
             }
