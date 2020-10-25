@@ -59,6 +59,12 @@ public class GetMine : MonoBehaviour
                     Debug.Log("Click");
                     canMine = true;
                 }
+                else if(hit && hit.collider.tag == "DropObj")
+                {
+                    BackpackManager.AddItem(ID);
+
+                    Destroy(gameObject);
+                }
             }
         }
     }

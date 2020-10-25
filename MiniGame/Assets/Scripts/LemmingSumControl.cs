@@ -53,11 +53,20 @@ public class LemmingSumControl : MonoBehaviour
 
     private GameObject newSquare;
 
+    //掉落物体预制体
+    public GameObject goodInstance;
+    //掉落物体
+    private GameObject goodObj;
+
     private int IndexX;
     private int IndexY;
 
     //增加的情况
     public int situation;
+
+    //掉落物体
+    [SerializeField]
+    private float basicSize;
     // Start is called before the first frame update
     void Awake(){
         _instance = this;
@@ -172,5 +181,18 @@ public class LemmingSumControl : MonoBehaviour
         lemmingObj.Add(newSquare);
 
         placeLemming++;
+    }
+
+    /// <summary>
+    /// 在场景中生成掉落物体
+    /// </summary>
+    /// <param name="item"></param>
+    private void CreateItem(Item item)
+    {
+        goodObj = GameObject.Instantiate(goodInstance);
+        goodObj.GetComponent<GetMine>().ID = item.id;
+        goodObj.GetComponent<SpriteRenderer>().sprite = item.itemImage;
+        goodObj.GetComponent<BoxCollider2D>().size = new Vector2(basicSize * item.width, basicSize * item.height);
+        goodObj.transform.position = player.transform.position;
     }
 }

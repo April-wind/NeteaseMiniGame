@@ -12,6 +12,7 @@ TagManager:
   - Mine
   - Snake
   - Eagle
+  - DropObj
   layers:
   - Default
   - TransparentFX
