@@ -213,4 +213,9 @@ public class LemmingMove : MonoBehaviour
             Debug.Log("你扣除了30点血");
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log(collision.gameObject.name);
+    }
 }
