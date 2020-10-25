@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class ItemOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     //要实现这个,还得挂载一个组件:CanvasGroup
-    public Transform originalParent;//原爹
+    public Transform originalParentParent;//原爷
     private Vector2 addFactor;//(屏幕上)初始偏移向量
     public Camera scaleUICamera;
     private Item currentItem = null;//当前物体
@@ -20,9 +20,10 @@ public class ItemOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     {
 
         scaleUICamera = GameObject.FindWithTag("ScaleUICamera").GetComponent<Camera>();//寻找摄像机
-        originalParent = transform.parent;//被拖拽物品原来的父物体
-        currentItem = originalParent.GetComponent<Slot>().slotItem;//当前物体赋值
-        currentPosition = originalParent.GetComponent<Slot>().position;
+        originalParentParent = transform.parent;//被拖拽物品原来的父物体
+        currentItem = originalParentParent.GetComponent<Slot>().slotItem;//当前物体赋值
+        currentPosition = originalParentParent.GetComponent<Slot>().position;
+        originalParentParent = transform.parent.parent;
         transform.SetParent(transform.parent.parent.parent);//与父同级,这样就能渲染在最上层了
 
         addFactor = scaleUICamera.WorldToScreenPoint(transform.position) - new Vector3(eventData.position.x, eventData.position.y, 0);
@@ -39,7 +40,7 @@ public class ItemOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        transform.SetParent(originalParent);//回归原爹
+        transform.SetParent(originalParentParent);//回归原爹
         /**
         共四种操作:
         a.丢弃->应该有个丢弃信号

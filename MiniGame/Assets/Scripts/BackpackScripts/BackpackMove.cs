@@ -38,7 +38,6 @@ public class BackpackMove : MonoBehaviour
     {
         CameraSizeChange();
         BackpackFollow();
-        //GridNumCorrect();
     }
     private void CameraSizeChange()
     {
@@ -61,23 +60,23 @@ public class BackpackMove : MonoBehaviour
         //同步移动
         this.transform.position = new Vector3(target.x - xAdd, target.y + yAdd, target.z);
     }
-    public void GridNumCorrect()
-    {
-        if (lemmingSumControl.LemmingNum == 0)
-            return;
-        else if (lemmingSumControl.LemmingNum > BackpackManager.instance.gridNum)
-        {
-            for (int i = 0; i < lemmingSumControl.LemmingNum - BackpackManager.instance.gridNum; i++)
-                BackpackManager.instance.backpack.GridGeneration();
-            BackpackManager.instance.gridNum = lemmingSumControl.LemmingNum;
-            BackpackManager.RefreshItem();
-        }
-        else if (lemmingSumControl.LemmingNum < BackpackManager.instance.gridNum)
-        {
-            for (int i = 0; i < BackpackManager.instance.gridNum - lemmingSumControl.LemmingNum; i++)
-                BackpackManager.instance.backpack.GridReduction();
-            BackpackManager.instance.gridNum = lemmingSumControl.LemmingNum;
-            BackpackManager.RefreshItem();
-        }
-    }
+    // public void GridNumCorrect()
+    // {
+    //     if (lemmingSumControl.LemmingNum == 0)
+    //         return;
+    //     else if (lemmingSumControl.LemmingNum > BackpackManager.instance.gridNum)
+    //     {
+    //         for (int i = 0; i < lemmingSumControl.LemmingNum - BackpackManager.instance.gridNum; i++)
+    //             BackpackManager.instance.backpack.GridGeneration();
+    //         BackpackManager.instance.gridNum = lemmingSumControl.LemmingNum;
+    //         BackpackManager.RefreshItem();
+    //     }
+    //     else if (lemmingSumControl.LemmingNum < BackpackManager.instance.gridNum)
+    //     {
+    //         for (int i = 0; i < BackpackManager.instance.gridNum - lemmingSumControl.LemmingNum; i++)
+    //             BackpackManager.instance.backpack.GridReduction();
+    //         BackpackManager.instance.gridNum = lemmingSumControl.LemmingNum;
+    //         BackpackManager.RefreshItem();
+    //     }
+    // }
 }

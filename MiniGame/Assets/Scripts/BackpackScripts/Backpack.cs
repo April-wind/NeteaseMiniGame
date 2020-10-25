@@ -162,11 +162,11 @@ public class Backpack
     //单点格子减少函数(已考虑越界,即减少至[0,0]时,但可能导致增加函数出bug)
     public int GridReduction()
     {
+        int id = 0;
         if (data[newX, newY] != 0)
         {
-            int id = data[newX, newY];
+            id = data[newX, newY];
             ItemReduction(newX, newY);
-            return id;
         }
 
         if (newY == 0)//行末
@@ -197,7 +197,7 @@ public class Backpack
             data[newX, newY] = -1;
             newX--;
         }
-        return 0;
+        return id;
     }
 
 
