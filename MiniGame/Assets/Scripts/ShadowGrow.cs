@@ -31,7 +31,7 @@ public class ShadowGrow : MonoBehaviour
         t = curTime / timeBeforeImpact * (maxSize - minSize) + minSize;
         spriteRenderer.color = new Color(0,0,0,curTime /timeBeforeImpact * maxA);
         transform.localScale = new Vector3(t.x,t.y,1);
-        if(Mathf.Abs(curTime - timeBeforeImpact) < 1){
+        if(Mathf.Abs(curTime - timeBeforeImpact) < 0.02f){
             shadow.enabled = true;
         }else{
             shadow.enabled = false;
