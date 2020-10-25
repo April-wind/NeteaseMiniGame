@@ -31,14 +31,13 @@ public class BackpackMove : MonoBehaviour
     void Start()
     {
         //摄像机初始大小
-        BasicSize = 450;
+        BasicSize = 540;
     }
 
     void Update()
     {
         CameraSizeChange();
         BackpackFollow();
-        //GridNumCorrect();
     }
     private void CameraSizeChange()
     {
@@ -48,12 +47,10 @@ public class BackpackMove : MonoBehaviour
     private void BackpackFollow()
     {
         //得到目标的屏幕坐标
-        //target = Camera.main.WorldToScreenPoint(lemming.transform.position);
         target = Camera.main.WorldToScreenPoint(new Vector3(lemming.transform.position.x + boxCollider2D.offset.x, lemming.transform.position.y + boxCollider2D.offset.y, 0));
         //将其屏幕坐标转化为该摄像机下的世界坐标
         target = scaleUICamera.ScreenToWorldPoint(target);
         //x,y方向的中心修正值
-        //Mathf.CeilToInt(Mathf.Sqrt(lemmingSumControl.LemmingNum-Mathf.CeilToInt(Mathf.Sqrt(lemmingSumControl.LemmingNum))))
         int yAdd = Mathf.CeilToInt(Mathf.Sqrt(lemmingSumControl.LemmingNum)) * gridSize;
         int xAdd = 350 + yAdd;
         if (lemmingSumControl.LemmingNum != 1 && Mathf.CeilToInt(Mathf.Sqrt(lemmingSumControl.LemmingNum - Mathf.Sqrt(lemmingSumControl.LemmingNum))) != Mathf.CeilToInt(Mathf.Sqrt(lemmingSumControl.LemmingNum)))
@@ -63,24 +60,23 @@ public class BackpackMove : MonoBehaviour
         //同步移动
         this.transform.position = new Vector3(target.x - xAdd, target.y + yAdd, target.z);
     }
-    public void GridNumCorrect()
-    {
-        if (lemmingSumControl.LemmingNum == 0)
-            return;
-        else if (lemmingSumControl.LemmingNum > BackpackManager.instance.gridNum)
-        {
-            for (int i = 0; i < lemmingSumControl.LemmingNum - BackpackManager.instance.gridNum; i++)
-                BackpackManager.instance.backpack.GridGeneration();
-            BackpackManager.instance.gridNum = lemmingSumControl.LemmingNum;
-            BackpackManager.RefreshItem();
-        }
-        else if (lemmingSumControl.LemmingNum < BackpackManager.instance.gridNum)
-        {
-            for (int i = 0; i < BackpackManager.instance.gridNum - lemmingSumControl.LemmingNum; i++)
-                BackpackManager.instance.backpack.GridReduction();
-            BackpackManager.instance.gridNum = lemmingSumControl.LemmingNum;
-            BackpackManager.RefreshItem();
-        }
-    }
-
+    // public void GridNumCorrect()
+    // {
+    //     if (lemmingSumControl.LemmingNum == 0)
+    //         return;
+    //     else if (lemmingSumControl.LemmingNum > BackpackManager.instance.gridNum)
+    //     {
+    //         for (int i = 0; i < lemmingSumControl.LemmingNum - BackpackManager.instance.gridNum; i++)
+    //             BackpackManager.instance.backpack.GridGeneration();
+    //         BackpackManager.instance.gridNum = lemmingSumControl.LemmingNum;
+    //         BackpackManager.RefreshItem();
+    //     }
+    //     else if (lemmingSumControl.LemmingNum < BackpackManager.instance.gridNum)
+    //     {
+    //         for (int i = 0; i < BackpackManager.instance.gridNum - lemmingSumControl.LemmingNum; i++)
+    //             BackpackManager.instance.backpack.GridReduction();
+    //         BackpackManager.instance.gridNum = lemmingSumControl.LemmingNum;
+    //         BackpackManager.RefreshItem();
+    //     }
+    // }
 }

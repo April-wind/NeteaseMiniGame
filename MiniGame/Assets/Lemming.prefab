@@ -93,12 +93,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b57a3ec4e127170408e575e8cb4e7089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
-  returnSpeed: 0
+  moveSpeed: 0.5
+  returnSpeed: 2
   moveDir: {x: 0, y: 0, z: 0}
-  targetDistance: 0
-  speedFactor: 1
-  distance: 2
+  paramAdd: 1
+  targetDistance: 2
+  speedFactor: 10
+  animSpeedBasic: 0.8
+  animSpeedFactor: 0.1
+  distance: 1.8
 --- !u!95 &6407960913615789041
 Animator:
   serializedVersion: 3

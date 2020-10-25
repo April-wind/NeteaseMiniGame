@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 98466215}
   - component: {fileID: 98466214}
   - component: {fileID: 98466216}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Backpack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -219,7 +219,7 @@ GameObject:
   - component: {fileID: 296883385}
   m_Layer: 0
   m_Name: ScaleUICamera
-  m_TagString: Untagged
+  m_TagString: ScaleUICamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -241,7 +241,7 @@ Camera:
   m_GameObject: {fileID: 296883384}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 3
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
@@ -258,11 +258,11 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 460.1
+  orthographic size: 540
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 512
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -282,7 +282,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 296883384}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 800, y: 450, z: -477}
+  m_LocalPosition: {x: 960, y: 540, z: -477}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -481,7 +481,7 @@ GameObject:
   - component: {fileID: 1560286917}
   - component: {fileID: 1560286919}
   - component: {fileID: 1560286918}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -678,7 +678,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backpackCamera: {fileID: 296883386}
-  backpack: {fileID: 0}
+  backpackObj: {fileID: 1560286915}
 --- !u!224 &1878847489 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4767458901246118482, guid: b1a85fde1c894aa4fbebd72f8ff300bc,
@@ -697,7 +697,7 @@ GameObject:
   - component: {fileID: 2097199379}
   - component: {fileID: 2097199378}
   - component: {fileID: 2097199377}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: ScaleUICanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -795,6 +795,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: foodQuantityBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 4767458901246118483, guid: b1a85fde1c894aa4fbebd72f8ff300bc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4767458901246118482, guid: b1a85fde1c894aa4fbebd72f8ff300bc,
         type: 3}
@@ -900,6 +905,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4767458901246118487, guid: b1a85fde1c894aa4fbebd72f8ff300bc,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1a85fde1c894aa4fbebd72f8ff300bc, type: 3}

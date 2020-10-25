@@ -12,25 +12,23 @@ public class foodQuantity : MonoBehaviour
     public float counter = 0;//计数器
     public Transform processTrans;//进度条
     public Transform indicatorTrans;//文字框
-    //private LemmingSumControl lemmingSumControl;//旅鼠数量脚本
 
     void Start()
     {
         health = BackpackManager.instance.gridNum;
-        // lemmingSumControl = GameObject.FindWithTag("GameController").GetComponent<LemmingSumControl>();
     }
 
     void Update()
     {
-        if (BackpackManager.instance.gridNum > 0){
+        if (BackpackManager.instance.gridNum > 0)
+        {
             HealthControl();
         }
     }
 
     public void HealthControl()
     {
-        float subtractionFactor = Mathf.CeilToInt(Mathf.Sqrt(BackpackManager.instance.gridNum)) * 0.0005f;
-        //health -= subtractionFactor;
+        float subtractionFactor = Mathf.CeilToInt(Mathf.Sqrt(BackpackManager.instance.gridNum)) * 0.0005f;//目前因子:旅鼠数开方向上取整
         health = BackpackManager.instance.gridNum;
         LemmingSumControl._Instance.lemmingNumTrue = BackpackManager.instance.gridNum;
         counter += subtractionFactor;

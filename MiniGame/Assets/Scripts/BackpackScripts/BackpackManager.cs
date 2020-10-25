@@ -46,24 +46,31 @@ public class BackpackManager : MonoBehaviour
             for (int j = 0; j < instance.backpack.data.GetLength(1); j++)
             {
                 instance.slots.Add(Instantiate(instance.emptySlot));
-                if (instance.backpack.data[i, j] == -1)
+                instance.slots[tmp].transform.SetParent(instance.slotGrid.transform);//设置父物体
+                if (instance.backpack.data[i, j] == -1)//对于不可用的格子
                 {
-                    instance.slots[tmp].GetComponent<Slot>().available = false;
-                    instance.slots[tmp].transform.SetParent(instance.slotGrid.transform);//设置父物体
-                    instance.slots[tmp].GetComponent<Slot>().SetUpSlot(null);
-
+                    instance.slots[tmp].GetComponent<Slot>().SetUpSlot(null, i, j);
                 }
-                else
+                else if (instance.backpack.data[i, j] == 0)//对于可用但为空的格子
                 {
-                    instance.slots[tmp].transform.SetParent(instance.slotGrid.transform);//设置父物体
+                    instance.slots[tmp].GetComponent<BoxCollider>().enabled = true;
+                    instance.slots[tmp].GetComponent<Slot>().SetUpSlot(null, i, j);
+                    instance.slots[tmp].GetComponent<BoxCollider>().size = new Vector3(100, 100, 1);
+                }
+                else//对于可用但不为空的格子
+                {
                     int x = instance.backpack.storeData[i, j].x;
                     int y = instance.backpack.storeData[i, j].y;
-                    if (i == x && j == y)
+
+                    if (i == x && j == y)//物品左上角
                     {
-                        instance.slots[tmp].GetComponent<Slot>().SetUpSlot(instance.myInventory.itemList[instance.backpack.data[i, j]]);//同步图片等物品信息
+                        instance.slots[tmp].GetComponent<BoxCollider>().enabled = true;
+                        instance.slots[tmp].GetComponent<Slot>().SetUpSlot(instance.myInventory.itemList[instance.backpack.data[i, j]], i, j);//同步图片等物品信息
                     }
-                    // else
-                    //     instance.slots[tmp].GetComponent<Slot>().SetUpSlot(null);
+                    else//物品左上角以外的点
+                    {
+                        instance.slots[tmp].GetComponent<Slot>().SetUpSlot(null, i, j);
+                    }
                 }
                 tmp++;
             }
@@ -76,12 +83,16 @@ public class BackpackManager : MonoBehaviour
         instance.backpack.PutIn(instance.myInventory.itemList[id]);
         RefreshItem();
     }
-    public static void RemoveItem()
+    public static void RemoveGrid()
     {
-        instance.backpack.GridReduction();
+
+        if (instance.backpack.GridReduction() != 0)
+        {
+            //格子减少导致的物品掉落应该有个丢弃信号
+        }
         RefreshItem();
     }
-    public static void UseItem(int x,int y)
+    public static void UseItem(int x, int y)
     {
         //Debug.Log(instance.backpack.data[x,y]);
         if(instance.backpack.data[x,y] != -1 && instance.backpack.data[x,y] != 0){
