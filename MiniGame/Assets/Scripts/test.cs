@@ -5,7 +5,7 @@ using UnityEngine;
 public class test : MonoBehaviour
 {
     public Camera backpackCamera;
-    public GameObject backpack;
+    public GameObject backpackObj;
     void Update()
     {
         Test();
@@ -39,7 +39,7 @@ public class test : MonoBehaviour
         //显示/隐藏背包
         if (Input.GetKeyDown(KeyCode.I))
         {
-            backpack.SetActive(!backpack.activeSelf);
+            backpackObj.SetActive(!backpackObj.activeSelf);
         }
     }
 }
