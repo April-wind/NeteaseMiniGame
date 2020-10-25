@@ -37,7 +37,9 @@ public class foodQuantity : MonoBehaviour
             for (int i = 0; (i < (int)counter) && (BackpackManager.instance.gridNum > 0); i++)
             {
                 //Debug.Log(123);
-                BackpackManager.instance.backpack.GridReduction();
+                int id = BackpackManager.instance.backpack.GridReduction();
+                if(id!=0)
+                LemmingSumControl._Instance.CreateItem(BackpackManager.instance.myInventory.itemList[id]);
                 BackpackManager.instance.gridNum--;
             }
             BackpackManager.RefreshItem();

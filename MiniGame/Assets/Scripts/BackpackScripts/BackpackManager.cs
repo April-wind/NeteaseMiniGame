@@ -80,15 +80,19 @@ public class BackpackManager : MonoBehaviour
     //测试用
     public static void AddItem(int id)
     {
-        instance.backpack.PutIn(instance.myInventory.itemList[id]);
+        Vector2Int t = new Vector2Int(-1, -1);
+       if( instance.backpack.PutIn(instance.myInventory.itemList[id])==t)
+        {
+            LemmingSumControl._Instance.CreateItem(instance.myInventory.itemList[id]);
+        }
         RefreshItem();
     }
     public static void RemoveGrid()
     {
-
-        if (instance.backpack.GridReduction() != 0)
+        int id = instance.backpack.GridReduction();
+        if (id != 0)
         {
-            //格子减少导致的物品掉落应该有个丢弃信号
+            LemmingSumControl._Instance.CreateItem(instance.myInventory.itemList[id]);
         }
         RefreshItem();
     }

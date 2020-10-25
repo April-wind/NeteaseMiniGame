@@ -198,19 +198,25 @@ public class LemmingMove : MonoBehaviour
         if (collision.tag == "Monster")
         {
             bloodChange = 40;
-            Debug.Log("你扣除了40点血");
+            BackpackManager.RemoveGrid();
+            BackpackManager.instance.gridNum--;
+            Debug.Log("Delete");
             Destroy(collision.gameObject,0.5f);
         }
         if (collision.tag == "SnakeCost")
         {
             bloodChange = 20;
-            Debug.Log("你扣除了20点血");
+            BackpackManager.RemoveGrid();
+            BackpackManager.instance.gridNum--;
+            Debug.Log("Delete");
         }
         //猫头鹰扣血
         if(collision.tag == "Eagle")
         {
             bloodChange = 30;
-            Debug.Log("你扣除了30点血");
+            BackpackManager.RemoveGrid();
+            BackpackManager.instance.gridNum--;
+            Debug.Log("Delete");
         }
     }
 

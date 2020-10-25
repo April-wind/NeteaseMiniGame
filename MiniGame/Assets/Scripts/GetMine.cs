@@ -29,9 +29,12 @@ public class GetMine : MonoBehaviour
         canMine = false;
         progress = 0;
 
-        //ui
-        sliderObj = this.transform.GetChild(0).GetChild(0).gameObject;
-        slider = sliderObj.GetComponent<Slider>();
+        //ui 有子物体
+        if (this.transform.childCount > 0)
+        {
+            sliderObj = this.transform.GetChild(0).GetChild(0).gameObject;
+            slider = sliderObj.GetComponent<Slider>();
+        }
 
         //player
         player = GameObject.FindWithTag("Player");
@@ -43,7 +46,8 @@ public class GetMine : MonoBehaviour
     void Update()
     {
         MineProgress();
-        Interrupt();
+        if(sliderObj)
+            Interrupt();
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -95,6 +99,7 @@ public class GetMine : MonoBehaviour
         if(testMove.moveDir.x != 0 || testMove.moveDir.y != 0)
         {
             canMine = false;
+
             sliderObj.SetActive(false);
         }
     }

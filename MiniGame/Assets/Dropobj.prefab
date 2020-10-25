@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3673389071857225258}
   - component: {fileID: 8671580540436569209}
   - component: {fileID: 4082469301077657753}
-  m_Layer: 0
+  m_Layer: 26
   m_Name: Dropobj
   m_TagString: DropObj
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ MonoBehaviour:
   ID: 0
   layer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 67108864
 --- !u!61 &4082469301077657753
 BoxCollider2D:
   m_ObjectHideFlags: 0

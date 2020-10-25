@@ -25,7 +25,7 @@ public class BackpackMove : MonoBehaviour
     public LemmingSumControl lemmingSumControl;
     //缩放因子
     [SerializeField]
-    private float scaleFactor = 0.62f;
+    private float scaleFactor = 0.79f;
     //旅鼠碰撞体
     public BoxCollider2D boxCollider2D;
     void Start()
@@ -51,8 +51,8 @@ public class BackpackMove : MonoBehaviour
         //将其屏幕坐标转化为该摄像机下的世界坐标
         target = scaleUICamera.ScreenToWorldPoint(target);
         //x,y方向的中心修正值
-        int yAdd = Mathf.CeilToInt(Mathf.Sqrt(lemmingSumControl.LemmingNum)) * gridSize;
-        int xAdd = 350 + yAdd;
+        int yAdd = 90+Mathf.CeilToInt(Mathf.Sqrt(lemmingSumControl.LemmingNum)) * gridSize;
+        int xAdd = 510 + yAdd-90;
         if (lemmingSumControl.LemmingNum != 1 && Mathf.CeilToInt(Mathf.Sqrt(lemmingSumControl.LemmingNum - Mathf.Sqrt(lemmingSumControl.LemmingNum))) != Mathf.CeilToInt(Mathf.Sqrt(lemmingSumControl.LemmingNum)))
         {
             yAdd -= 50;

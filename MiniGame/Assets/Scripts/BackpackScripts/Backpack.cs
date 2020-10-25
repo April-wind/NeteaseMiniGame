@@ -42,6 +42,8 @@ public class Backpack
     //单点物品放入检测函数, x,y为受检测点的坐标
     private bool CheckPut(int x, int y, Item item)
     {
+        if (item == null)
+            return false;
         //越界检测
         if (x + item.height > data.GetLength(0))
             return false;
