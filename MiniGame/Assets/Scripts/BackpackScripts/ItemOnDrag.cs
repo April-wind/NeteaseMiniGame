@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 
@@ -11,7 +12,9 @@ public class ItemOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     private Vector2 addFactor;//(屏幕上)初始偏移向量
     public Camera scaleUICamera;
     private Item currentItem = null;//当前物体
-    private Item targetItem = null;//射线下的物体
+    private Image currentImage = null;//当前图片
+    private Item targetItem = null;//目标物体
+    private Image targetImage = null;//目标图片
     private Vector2Int currentPosition = new Vector2Int(0, 0);//当前坐标
     private Vector2Int targetPosition = new Vector2Int(0, 0);//目标坐标
 
@@ -22,8 +25,10 @@ public class ItemOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         scaleUICamera = GameObject.FindWithTag("ScaleUICamera").GetComponent<Camera>();//寻找摄像机
         originalParentParent = transform.parent;//被拖拽物品原来的父物体
         currentItem = originalParentParent.GetComponent<Slot>().slotItem;//当前物体赋值
-        currentPosition = originalParentParent.GetComponent<Slot>().position;
-        originalParentParent = transform.parent.parent;
+        currentImage = originalParentParent.GetComponent<Slot>().slotImage;//当前图片赋值
+        currentPosition = originalParentParent.GetComponent<Slot>().position;//当前位置赋值
+
+        originalParentParent = transform.parent.parent;//爷物体
         transform.SetParent(transform.parent.parent.parent);//与父同级,这样就能渲染在最上层了
 
         addFactor = scaleUICamera.WorldToScreenPoint(transform.position) - new Vector3(eventData.position.x, eventData.position.y, 0);
@@ -36,9 +41,42 @@ public class ItemOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     public void OnDrag(PointerEventData eventData)
     {
         transform.position = eventData.position + addFactor;//物品和鼠标一起动
-        Debug.Log("1. " + transform.position);
-        Debug.Log("2. " + eventData.position);
-        Debug.Log("3. " + addFactor);
+
+        //碰撞信息类
+        RaycastHit hit;
+        //Vector3 deleteTest = new Vector3(transform.position.x + currentItem.width * 50, transform.position.y - currentItem.height * 50, transform.position.z - 100);
+        //射线起点
+        Vector3 origin = new Vector3(transform.position.x + 50, transform.position.y - 50, transform.position.z - 100);
+        //射线检测
+        if (Physics.Raycast(origin, new Vector3(0, 0, 1), out hit, Mathf.Infinity, 1 << 9))//包内->b/c/d
+        {
+            if (hit.collider.gameObject.GetComponent<Slot>().slotItem)
+            {
+                int currentItemId = currentItem.id;
+                int targetItemId = hit.collider.gameObject.GetComponent<Slot>().slotItem.id;
+                if (BackpackManager.instance.backpack.compositeTable[currentItemId, targetItemId] != 0)
+                {
+                    targetImage = hit.collider.gameObject.GetComponent<Slot>().slotImage;
+                    targetImage.color = new Vector4(1, 1, 1, 0.5f);
+                    currentImage.color = new Vector4(1, 1, 1, 0.5f);
+                }
+                else if (targetImage)
+                {
+                    targetImage.color = new Vector4(1, 1, 1, 1);
+                    currentImage.color = new Vector4(1, 1, 1, 1);
+                }
+            }
+            else if (targetImage)
+            {
+                targetImage.color = new Vector4(1, 1, 1, 1);
+                currentImage.color = new Vector4(1, 1, 1, 1);
+            }
+        }
+        else if (targetImage)
+        {
+            targetImage.color = new Vector4(1, 1, 1, 1);
+            currentImage.color = new Vector4(1, 1, 1, 1);
+        }
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -90,6 +128,11 @@ public class ItemOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
                     BackpackManager.RefreshItem();
                     Debug.Log("交换");
                 }
+                else
+                {
+                    BackpackManager.RefreshItem();
+                    Debug.Log("合成");
+                }
             }
             else//目标mxn->c/d
             {
@@ -99,6 +142,11 @@ public class ItemOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
                     BackpackManager.instance.backpack.PointPutIn(currentPosition.x, currentPosition.y, currentItem);//恢复原物体
                     BackpackManager.RefreshItem();
                     Debug.Log("弹回");
+                }
+                else
+                {
+                    BackpackManager.RefreshItem();
+                    Debug.Log("合成");
                 }
             }
             return;
@@ -119,7 +167,6 @@ public class ItemOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
                     BackpackManager.RefreshItem();
                     Debug.Log("弹回");
                 }
-
             }
             else//非空格->c/d
             {
@@ -130,14 +177,26 @@ public class ItemOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
                     BackpackManager.RefreshItem();
                     Debug.Log("弹回");
                 }
-                return;
+                else
+                {
+                    BackpackManager.RefreshItem();
+                    Debug.Log("合成");
+                }
             }
+            return;
         }
     }
 
     //TODO
     private bool ItemSynthesis(int currentItemId, int targetItemId)
     {
+        if (BackpackManager.instance.backpack.compositeTable[currentItemId, targetItemId] != 0)
+        {
+            int itemID = BackpackManager.instance.backpack.compositeTable[currentItemId, targetItemId];
+            BackpackManager.instance.backpack.ItemReduction(targetPosition.x, targetPosition.y);//删除目标位置
+            BackpackManager.instance.backpack.PointPutIn(targetPosition.x, targetPosition.y, BackpackManager.instance.myInventory.itemList[itemID]);
+            return true;
+        }
         return false;
     }
 }
