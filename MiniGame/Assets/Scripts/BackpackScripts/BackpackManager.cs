@@ -47,21 +47,27 @@ public class BackpackManager : MonoBehaviour
             {
                 instance.slots.Add(Instantiate(instance.emptySlot));
                 instance.slots[tmp].transform.SetParent(instance.slotGrid.transform);//设置父物体
-                if (instance.backpack.data[i, j] == -1)
+                if (instance.backpack.data[i, j] == -1)//对于不可用的格子
                 {
                     instance.slots[tmp].GetComponent<Slot>().SetUpSlot(null, i, j);
                 }
-                else
+                else if (instance.backpack.data[i, j] == 0)//对于可用但为空的格子
+                {
+                    instance.slots[tmp].GetComponent<BoxCollider>().enabled = true;
+                    instance.slots[tmp].GetComponent<Slot>().SetUpSlot(null, i, j);
+                    instance.slots[tmp].GetComponent<BoxCollider>().size = new Vector3(100, 100, 1);
+                }
+                else//对于可用但不为空的格子
                 {
                     int x = instance.backpack.storeData[i, j].x;
                     int y = instance.backpack.storeData[i, j].y;
 
-                    if (i == x && j == y)
+                    if (i == x && j == y)//物品左上角
                     {
                         instance.slots[tmp].GetComponent<BoxCollider>().enabled = true;
                         instance.slots[tmp].GetComponent<Slot>().SetUpSlot(instance.myInventory.itemList[instance.backpack.data[i, j]], i, j);//同步图片等物品信息
                     }
-                    else
+                    else//物品左上角以外的点
                     {
                         instance.slots[tmp].GetComponent<Slot>().SetUpSlot(null, i, j);
                     }
@@ -77,9 +83,13 @@ public class BackpackManager : MonoBehaviour
         instance.backpack.PutIn(instance.myInventory.itemList[id]);
         RefreshItem();
     }
-    public static void RemoveItem()
+    public static void RemoveGrid()
     {
-        instance.backpack.GridReduction();
+
+        if (instance.backpack.GridReduction() != 0)
+        {
+            //格子减少导致的物品掉落应该有个丢弃信号
+        }
         RefreshItem();
     }
     public static void UseItem(int x, int y)

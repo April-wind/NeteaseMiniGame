@@ -51,6 +51,24 @@ public class Backpack
         return true;
     }
 
+    public bool PointPutIn(int x, int y, Item item)
+    {
+        if (CheckPut(x, y, item))
+        {
+            for (int i = 0; i < item.height; i++)
+            {
+                Vector2Int t = new Vector2Int(x, y);
+                for (int j = 0; j < item.width; j++)
+                {
+                    data[i + t.x, j + t.y] = item.id;
+                    storeData[i + t.x, j + t.y] = t;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
     //物品放入的执行函数, 配合单点检测进行暴力扫描
     public Vector2Int PutIn(Item item)
     {
@@ -142,10 +160,15 @@ public class Backpack
     }
 
     //单点格子减少函数(已考虑越界,即减少至[0,0]时,但可能导致增加函数出bug)
-    public void GridReduction()
+    public int GridReduction()
     {
         if (data[newX, newY] != 0)
+        {
+            int id = data[newX, newY];
             ItemReduction(newX, newY);
+            return id;
+        }
+
         if (newY == 0)//行末
         {
             data[newX, newY] = -1;
@@ -153,7 +176,7 @@ public class Backpack
             {
                 //GameOver();
                 //此时游戏应该结束, 否则继续运行GridGeneration()将出现忽略[0,0]的错误
-                return;
+                return 0;
             }
             newY = newX;
             newX--;
@@ -174,6 +197,7 @@ public class Backpack
             data[newX, newY] = -1;
             newX--;
         }
+        return 0;
     }
 
 

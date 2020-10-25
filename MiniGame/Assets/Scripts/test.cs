@@ -28,7 +28,7 @@ public class test : MonoBehaviour
         // //背包格子减少
         if (Input.GetKeyDown(KeyCode.C))
         {
-            BackpackManager.RemoveItem();
+            BackpackManager.RemoveGrid();
             BackpackManager.instance.gridNum--;
         }
 
