@@ -258,7 +258,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 450
+  orthographic size: 540
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -282,7 +282,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 296883384}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 800, y: 450, z: -477}
+  m_LocalPosition: {x: 960, y: 540, z: -477}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -678,7 +678,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backpackCamera: {fileID: 296883386}
-  backpack: {fileID: 0}
+  backpackObj: {fileID: 1560286915}
 --- !u!224 &1878847489 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4767458901246118482, guid: b1a85fde1c894aa4fbebd72f8ff300bc,

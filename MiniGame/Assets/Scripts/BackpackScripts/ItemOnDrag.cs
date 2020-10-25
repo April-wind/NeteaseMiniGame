@@ -36,6 +36,9 @@ public class ItemOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     public void OnDrag(PointerEventData eventData)
     {
         transform.position = eventData.position + addFactor;//物品和鼠标一起动
+        Debug.Log("1. " + transform.position);
+        Debug.Log("2. " + eventData.position);
+        Debug.Log("3. " + addFactor);
     }
 
     public void OnEndDrag(PointerEventData eventData)

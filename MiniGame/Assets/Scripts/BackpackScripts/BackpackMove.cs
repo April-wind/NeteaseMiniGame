@@ -31,7 +31,7 @@ public class BackpackMove : MonoBehaviour
     void Start()
     {
         //摄像机初始大小
-        BasicSize = 450;
+        BasicSize = 540;
     }
 
     void Update()
