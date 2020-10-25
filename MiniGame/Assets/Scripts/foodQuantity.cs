@@ -11,7 +11,6 @@ public class foodQuantity : MonoBehaviour
     public float health;//饥饿条
     public float counter = 0;//计数器
     public Transform processTrans;//进度条
-    public Transform indicatorTrans;//文字框
 
     void Start()
     {
@@ -32,8 +31,7 @@ public class foodQuantity : MonoBehaviour
         health = BackpackManager.instance.gridNum;
         LemmingSumControl._Instance.lemmingNumTrue = BackpackManager.instance.gridNum;
         counter += subtractionFactor;
-        indicatorTrans.GetComponent<Text>().text = ((int)health).ToString() + "只";
-        processTrans.GetComponent<Image>().fillAmount = health / 100.0f;
+        processTrans.GetComponent<Image>().fillAmount = Mathf.Sqrt(health - counter) / 10.0f;
         if (counter > 1)
         {
             for (int i = 0; (i < (int)counter) && (BackpackManager.instance.gridNum > 0); i++)

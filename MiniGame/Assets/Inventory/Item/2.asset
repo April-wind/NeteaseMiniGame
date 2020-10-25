@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: 2
   m_EditorClassIdentifier: 
   id: 2
-  itemImage: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  itemHeld: 1
-  width: 2
-  height: 1
+  itemImage: {fileID: 21300000, guid: 2a39934f8c6a69a4e9e7cb1739cca5a1, type: 3}
+  width: 1
+  height: 2
