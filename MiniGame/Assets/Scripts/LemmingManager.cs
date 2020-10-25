@@ -6,15 +6,15 @@ using UnityEngine;
 
 public class LemmingManager : MonoBehaviour
 {
-    //移动速度
     [SerializeField]
+    [Header("移动速度")]
     public float moveSpeed;
-    //归位速度
     [SerializeField]
+    [Header("归位速度")]
     public float returnSpeed;
     //private float returnSpeedSlow;
-    //移动方向
     [SerializeField]
+    [Header("移动方向")]
     private Vector3 moveDir;
     //运动目标
     private Vector3 target;
@@ -23,16 +23,26 @@ public class LemmingManager : MonoBehaviour
     private float currentY;
     private float param;
     [SerializeField]
-    //旅鼠相对移动的距离
+    [Header("距离因子基数")]
+    private float paramAdd;
+    [SerializeField]
+    [Header("旅鼠相对移动的距离")]
     public float targetDistance;
     [SerializeField]
-    //旅鼠的运动速度因子
+    [Header("旅鼠速度因子")]
     public float speedFactor;
-
-    //旅鼠之间的间隔
     [SerializeField]
+    [Header("旅鼠的动画速度基数")]
+    private float animSpeedBasic;
+    [SerializeField]
+    [Header("旅鼠的动画速度衰减因子")]
+    private float animSpeedFactor;
+
+    [SerializeField]
+    [Header("旅鼠之间的间隔")]
     private float distance;
     //旅鼠所处相对位置
+    
     private float xPosition;
     private float yPosition;
 
@@ -85,6 +95,8 @@ public class LemmingManager : MonoBehaviour
         if (lemmingMove.moveDir.x > 0 && lemmingMove.moveDir.y > 0)
         {
             int index = (int)Mathf.Sqrt(lemmingSumControl.LemmingNum);
+            if (index * index == lemmingSumControl.LemmingNum)
+                index -= 1;
             param = Mathf.Sqrt(Mathf.Pow((0 - xPosition), 2) + Mathf.Pow((index - yPosition), 2));
             //ChangeMoveDir(lemmingMove.moveDir.x, lemmingMove.moveDir.y);
             if (haveInput)
@@ -92,13 +104,13 @@ public class LemmingManager : MonoBehaviour
                 LemMove(param);
             }
              
-            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * (param + 1) * Time.deltaTime);
+            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * (param + paramAdd) * Time.deltaTime);
 
             //旋转
             spriteRenderer.flipX = true;
             spriteRenderer.flipY = false;
             this.transform.rotation = Quaternion.Euler(0, 0, 0);
-            this.GetComponent<Animator>().speed = 1;
+            this.GetComponent<Animator>().speed = animSpeedBasic * (param * animSpeedFactor + 1);
         }
         else if (lemmingMove.moveDir.x > 0 && lemmingMove.moveDir.y < 0)
         {
@@ -109,64 +121,70 @@ public class LemmingManager : MonoBehaviour
             {
                 LemMove(param);
             }
-            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * (param + 1) * Time.deltaTime);
+            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * speedFactor *(param + paramAdd) * Time.deltaTime);
 
             //旋转
             spriteRenderer.flipX = true;
             spriteRenderer.flipY = false;
             this.transform.rotation = Quaternion.Euler(0, 0, -90);
-            this.GetComponent<Animator>().speed = 1;
+            this.GetComponent<Animator>().speed = animSpeedBasic * (param * animSpeedFactor + 1);
         }
         else if (lemmingMove.moveDir.x < 0 && lemmingMove.moveDir.y > 0)
         {
             int index = (int)Mathf.Sqrt(lemmingSumControl.LemmingNum);
+            if (index * index == lemmingSumControl.LemmingNum)
+                index -= 1;
             param = Mathf.Sqrt(Mathf.Pow((index - xPosition), 2) + Mathf.Pow((index - yPosition), 2));
             //ChangeMoveDir(lemmingMove.moveDir.x, lemmingMove.moveDir.y);
             if (haveInput)
             {
                 LemMove(param);
             }
-            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * speedFactor * (param + 1) * Time.deltaTime);
+            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * speedFactor * (param + paramAdd) * Time.deltaTime);
 
             //旋转
             spriteRenderer.flipX = false;
             spriteRenderer.flipY = false;
             this.transform.rotation = Quaternion.Euler(0, 0, 0);
-            this.GetComponent<Animator>().speed = 1;
+            this.GetComponent<Animator>().speed = animSpeedBasic * (param * animSpeedFactor + 1);
         }
         else if (lemmingMove.moveDir.x < 0 && lemmingMove.moveDir.y < 0)
         {
             int index = (int)Mathf.Sqrt(lemmingSumControl.LemmingNum);
+            if (index * index == lemmingSumControl.LemmingNum)
+                index -= 1;
             param = Mathf.Sqrt(Mathf.Pow((index - xPosition), 2) + Mathf.Pow((0 - yPosition), 2));
             //ChangeMoveDir(lemmingMove.moveDir.x, lemmingMove.moveDir.y);
             if (haveInput)
             {
                 LemMove(param);
             }
-            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * speedFactor * (param + 1) * Time.deltaTime);
+            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * speedFactor * (param + paramAdd) * Time.deltaTime);
 
             //旋转
             spriteRenderer.flipX = false;
             spriteRenderer.flipY = false;
             this.transform.rotation = Quaternion.Euler(0, 0, 90);
-            this.GetComponent<Animator>().speed = 1;
+            this.GetComponent<Animator>().speed = animSpeedBasic * (param * animSpeedFactor + 1);
         }
         else if (lemmingMove.moveDir.x < 0 && lemmingMove.moveDir.y == 0)
         {
             int index = (int)Mathf.Sqrt(lemmingSumControl.LemmingNum);
+            if (index * index == lemmingSumControl.LemmingNum)
+                index -= 1;
             param = Mathf.Abs(index - xPosition);
-            //ChangeMoveDir(lemmingMove.moveDir.x, lemmingMove.moveDir.y);
+            
             if (haveInput)
             {
                 LemMove(param);
             }
-            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * speedFactor * (param + 1) * Time.deltaTime);
+            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * speedFactor * (param + paramAdd) * Time.deltaTime);
 
             //旋转
             spriteRenderer.flipX = false;
             spriteRenderer.flipY = false;
             this.transform.rotation = Quaternion.Euler(0, 0, 45);
-            this.GetComponent<Animator>().speed = 1;
+            this.GetComponent<Animator>().speed = animSpeedBasic * (param * animSpeedFactor + 1);
         }
         else if (lemmingMove.moveDir.x > 0 && lemmingMove.moveDir.y == 0)
         {
@@ -177,30 +195,33 @@ public class LemmingManager : MonoBehaviour
             {
                 LemMove(param);
             }
-            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * speedFactor * (param + 1) * Time.deltaTime);
+            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * speedFactor * (param + paramAdd) * Time.deltaTime);
 
             //旋转
             spriteRenderer.flipX = true;
             spriteRenderer.flipY = false;
             this.transform.rotation = Quaternion.Euler(0, 0, -45);
-            this.GetComponent<Animator>().speed = 1;
+            this.GetComponent<Animator>().speed = animSpeedBasic * (param * animSpeedFactor + 1);
         }
         else if (lemmingMove.moveDir.x == 0 && lemmingMove.moveDir.y > 0)
         {
             int index = (int)Mathf.Sqrt(lemmingSumControl.LemmingNum);
+            if (index * index == lemmingSumControl.LemmingNum)
+                index -= 1;
             param = Mathf.Abs(index - yPosition);
+            
             //ChangeMoveDir(lemmingMove.moveDir.x, lemmingMove.moveDir.y);
             if (haveInput)
             {
                 LemMove(param);
             }
-            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * speedFactor * (param + 1) * Time.deltaTime);
+            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * speedFactor * (param + paramAdd) * Time.deltaTime);
 
             //旋转
             spriteRenderer.flipX = false;
             spriteRenderer.flipY = false;
             this.transform.rotation = Quaternion.Euler(0, 0, -45);
-            this.GetComponent<Animator>().speed = 1;
+            this.GetComponent<Animator>().speed = animSpeedBasic * (param * animSpeedFactor + 1);
         }
         else if (lemmingMove.moveDir.x == 0 && lemmingMove.moveDir.y < 0)
         {
@@ -211,26 +232,26 @@ public class LemmingManager : MonoBehaviour
             {
                 LemMove(param);
             }
-            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * speedFactor * (param + 1) * Time.deltaTime);
+            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, target, moveSpeed * speedFactor * (param + paramAdd) * Time.deltaTime);
 
             //旋转
             spriteRenderer.flipX = false;
             spriteRenderer.flipY = true;
             this.transform.rotation = Quaternion.Euler(0, 0, 45);
-            this.GetComponent<Animator>().speed = 1;
+            this.GetComponent<Animator>().speed = animSpeedBasic * (param * animSpeedFactor + 1);
         }
         else
         {
+            this.GetComponent<Animator>().speed = Mathf.Lerp(this.GetComponent<Animator>().speed, 0, returnSpeed * Time.deltaTime);
             this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, new Vector3(distance * xPosition, -1 * distance * yPosition,
                 -1), returnSpeed * Time.deltaTime);
-
-            this.GetComponent<Animator>().speed = 0;
+            
         }
     }
 
     private void LemMove(float param)
     {
-        target = new Vector3(distance * xPosition, -distance * yPosition, 0) + new Vector3(lemmingMove.moveDir.x * targetDistance, lemmingMove.moveDir.y * targetDistance, 0);
+        target = new Vector3(distance * xPosition, -distance * yPosition, 0) - new Vector3(lemmingMove.moveDir.x * targetDistance, lemmingMove.moveDir.y * targetDistance, 0) / (param + paramAdd);
         haveInput = false;
     }
 
@@ -243,7 +264,7 @@ public class LemmingManager : MonoBehaviour
     {
         if (currentX != x || currentY != y)
         {
-            target = new Vector3(xPosition * distance, -yPosition * distance, 0) + new Vector3(param * lemmingMove.moveDir.x, param * lemmingMove.moveDir.y, 0);
+            target = new Vector3(xPosition * distance, -yPosition * distance, 0) - new Vector3(lemmingMove.moveDir.x,lemmingMove.moveDir.y, 0) / (param + paramAdd);
 
             currentX = x;
             currentY = y;

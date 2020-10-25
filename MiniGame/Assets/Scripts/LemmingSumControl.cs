@@ -161,6 +161,12 @@ public class LemmingSumControl : MonoBehaviour
 
         newSquare = GameObject.Instantiate(lemmingInstance);
         newSquare.transform.parent = player.transform;
+        if (lemmingObj.Count > 0)
+        {
+            newSquare.transform.rotation = lemmingObj[0].transform.rotation;
+            newSquare.transform.GetComponent<SpriteRenderer>().flipX = lemmingObj[0].transform.GetComponent<SpriteRenderer>().flipX;
+            newSquare.transform.GetComponent<SpriteRenderer>().flipY = lemmingObj[0].transform.GetComponent<SpriteRenderer>().flipY;
+        }
         newSquare.GetComponent<LemmingManager>().GetPosition(IndexX, IndexY);
 
         lemmingObj.Add(newSquare);

@@ -94,10 +94,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0.5
-  returnSpeed: 4
+  returnSpeed: 2
   moveDir: {x: 0, y: 0, z: 0}
-  targetDistance: 5
-  speedFactor: 1
+  paramAdd: 1
+  targetDistance: 2
+  speedFactor: 10
+  animSpeedBasic: 0.8
+  animSpeedFactor: 0.1
   distance: 1.8
 --- !u!95 &6407960913615789041
 Animator:
