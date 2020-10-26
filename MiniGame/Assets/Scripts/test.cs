@@ -34,12 +34,20 @@ public class test : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.X))
         {
-            BackpackManager.AddItem(6);
+            BackpackManager.AddItem(1);
+        }
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            BackpackManager.AddItem(2);
         }
         //显示/隐藏背包
         if (Input.GetKeyDown(KeyCode.I))
         {
             backpackObj.SetActive(!backpackObj.activeSelf);
+        }
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            BackpackManager.AddItem(7);
         }
     }
 }
