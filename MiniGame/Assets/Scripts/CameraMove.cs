@@ -24,6 +24,8 @@ public class CameraMove : MonoBehaviour
 
     private void LateUpdate()
     {
-        this.transform.position = Vector3.Lerp(this.transform.position, new Vector3(followTarget.transform.position.x + 1, followTarget.transform.position.y - 1, this.transform.position.z), Time.deltaTime * followSpeed);
+        float newX = Mathf.Min(Mathf.Max(followTarget.transform.position.x + 1,0),88.1f);
+        float newY = Mathf.Min(Mathf.Max(followTarget.transform.position.y + 1,-24.9f),29.8f);
+        this.transform.position = Vector3.Lerp(this.transform.position, new Vector3(newX,newY,transform.position.z), Time.deltaTime * followSpeed);
     }
 }
