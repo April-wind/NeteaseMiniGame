@@ -13,6 +13,7 @@ TagManager:
   - Snake
   - Eagle
   - DropObj
+  - TreasureChest
   layers:
   - Default
   - TransparentFX
