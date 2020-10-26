@@ -30,7 +30,7 @@ public class GetMine : MonoBehaviour
         progress = 0;
 
         //ui 有子物体
-        if (this.transform.childCount > 0)
+        if (this.transform.childCount > 0 && !this.CompareTag("TreasureChest"))
         {
             sliderObj = this.transform.GetChild(0).GetChild(0).gameObject;
             slider = sliderObj.GetComponent<Slider>();
@@ -73,6 +73,7 @@ public class GetMine : MonoBehaviour
                     GetComponent<SpriteRenderer>().enabled = false;
                     GetComponent<BoxCollider2D>().enabled = false;
                     transform.Find("宝物").gameObject.SetActive(true);
+                    transform.Find("奶酪").gameObject.SetActive(true);
                 }
             }
         }

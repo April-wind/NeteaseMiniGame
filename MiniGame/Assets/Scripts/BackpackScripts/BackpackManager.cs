@@ -14,7 +14,8 @@ public class BackpackManager : MonoBehaviour
     public List<GameObject> slots = new List<GameObject>();//格子列表
     public int gridNum;//格子个数
     public Material material;//火把
-    private float lightValue;//光照值
+    private float lightValue = 0f;//光照值
+    private float newLightValue = 0f;
 
     //单例
     void Awake()
@@ -33,6 +34,10 @@ public class BackpackManager : MonoBehaviour
         RefreshItem();
     }
 
+    void Update()
+    {
+        torchLit(newLightValue);
+    }
     public static void RefreshItem()
     {
         int tmp = 0;
@@ -85,9 +90,13 @@ public class BackpackManager : MonoBehaviour
                     flag = true;
             }
         if (flag)
-            instance.torchLit(0.4f);
+        {
+            instance.newLightValue = 0.4f;
+        }
         else
-            instance.torchLit(0f);
+        {
+            instance.newLightValue = 0.0f;
+        }
 
 
     }
