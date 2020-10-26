@@ -98,6 +98,8 @@ public class BackpackManager : MonoBehaviour
         if (instance.backpack.data[x, y] != -1 && instance.backpack.data[x, y] != 0)
         {
             if(instance.myInventory.itemList[instance.backpack.data[x, y]].use() == true){
+                instance.backpack.ItemReduction(x, y);
+                RefreshItem();
             }
         }
     }
