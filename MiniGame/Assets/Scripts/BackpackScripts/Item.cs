@@ -12,8 +12,8 @@ public class Item : ScriptableObject
     //public int itemHeld;//持有数量,既然没有堆叠,那就没什么存在意义了
     public int width;//宽
     public int height;//高
-    public virtual void use(){
+    public virtual bool use(){
         Debug.Log("使用了"+id+"号物品");
-        ;
+        return false;
     }//使用效果
 }

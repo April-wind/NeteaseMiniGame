@@ -127,9 +127,10 @@ public class BackpackManager : MonoBehaviour
         //Debug.Log(instance.backpack.data[x,y]);
         if (instance.backpack.data[x, y] != -1 && instance.backpack.data[x, y] != 0)
         {
-            instance.myInventory.itemList[instance.backpack.data[x, y]].use();
-            instance.backpack.ItemReduction(x, y);
-            RefreshItem();
+            if(instance.myInventory.itemList[instance.backpack.data[x, y]].use() == true){
+                instance.backpack.ItemReduction(x, y);
+                RefreshItem();
+            }
         }
     }
     private void torchLit(float newLightValue)

@@ -45,5 +45,9 @@ public class test : MonoBehaviour
         {
             backpackObj.SetActive(!backpackObj.activeSelf);
         }
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            BackpackManager.AddItem(7);
+        }
     }
 }
