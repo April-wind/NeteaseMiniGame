@@ -40,7 +40,7 @@
             sampler2D _MainTex;
             float4 _MainTex_ST;
             float2 _MainTex_TexelSize;
-            float4 _LightColor;
+            float4 _MainColor;
             float _LightIntensity;
             float4 _LightPos;
             //uniform float4 _LightParm;
@@ -62,11 +62,12 @@
                 float dis = distance(i.uv,_LightPos.xy);
                 
                 // sample the texture
-                fixed4 col = tex2D(_MainTex, i.uv);
+                fixed4 col = tex2D(_MainTex, i.uv) ;
                 // apply fog
                 UNITY_APPLY_FOG(i.fogCoord, col);
                 float radius = _LightPos.z; 
                 float lightIntensity = saturate(lerp(0,_LightPos.w,(radius - dis)/(radius + dis)));
+                col = col * _MainColor;
                 col.a = lightIntensity;
                 return col;
             }

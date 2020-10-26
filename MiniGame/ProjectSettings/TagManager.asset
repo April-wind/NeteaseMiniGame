@@ -13,6 +13,7 @@ TagManager:
   - Snake
   - Eagle
   - DropObj
+  - Door
   layers:
   - Default
   - TransparentFX

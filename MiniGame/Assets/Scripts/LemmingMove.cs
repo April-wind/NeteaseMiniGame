@@ -48,6 +48,19 @@ public class LemmingMove : MonoBehaviour
 
     //blood,用于计算血量的削减
     public float bloodChange;
+
+    //场景材质球
+    public Material material;
+    //材质球属性 阴影
+    [SerializeField]
+    private float shadowStr;
+    //渐变速度
+    [SerializeField]
+    private float changeSpeed;
+
+    //是否进入左上角
+    [SerializeField]
+    private bool InDoor; 
     // Start is called before the first frame update
     private void Awake()
     {
@@ -85,6 +98,23 @@ public class LemmingMove : MonoBehaviour
 
         //更新子物体个数
         //childNum = transform.childCount;
+
+        //进入左上角场景，场景颜色变暗
+        SceneChange();
+    }
+
+    private void SceneChange()
+    {
+        if (InDoor)
+        {
+            Debug.Log("aaa");
+            shadowStr = Mathf.Lerp(shadowStr, 1.0f, Time.deltaTime * changeSpeed);material.SetFloat("_ShadowStrength", shadowStr);
+        }
+        else
+        {
+            shadowStr = Mathf.Lerp(shadowStr, 0.0f, Time.deltaTime * changeSpeed); material.SetFloat("_ShadowStrength", shadowStr);
+        }
+        
     }
 
     private void LateUpdate()
@@ -217,6 +247,11 @@ public class LemmingMove : MonoBehaviour
             BackpackManager.RemoveGrid();
             BackpackManager.instance.gridNum--;
             Debug.Log("Delete");
+        }
+        if(collision.tag == "Door")
+        {
+            Debug.Log("进入");
+            InDoor = !InDoor;
         }
     }
 
