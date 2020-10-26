@@ -11,6 +11,7 @@ public class Bridge : Item
         PutBridge t = GameObject.Find("Lemmings").GetComponent<PutBridge>();
         if(t.canPutBridge){
             t.bridge.GetComponent<SpriteRenderer>().enabled = true;
+            t.bridge.GetComponent<BoxCollider2D>().enabled = false;
             return true;
         }
         return false;
