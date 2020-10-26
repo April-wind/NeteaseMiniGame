@@ -47,7 +47,7 @@ public class test : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.P))
         {
-            BackpackManager.AddItem(7);
+            BackpackManager.AddItem(6);
         }
     }
 }
