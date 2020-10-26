@@ -58,17 +58,17 @@ public class GetMine : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.back, 5f, layer);
-                if (hit && hit.collider.tag == "Mine")
+                if (hit && hit.collider.tag == "Mine" && hit.collider.gameObject == this.gameObject)
                 {
                     Debug.Log("Click");
                     canMine = true;
                 }
-                else if (hit && hit.collider.tag == "DropObj")
+                else if (hit && hit.collider.tag == "DropObj" && hit.collider.gameObject == this.gameObject)
                 {
                     BackpackManager.AddItem(ID);
                     Destroy(gameObject);
                 }
-                else if (hit && hit.collider.tag == "TreasureChest")
+                else if (hit && hit.collider.tag == "TreasureChest" && hit.collider.gameObject == this.gameObject)
                 {
                     GetComponent<SpriteRenderer>().enabled = false;
                     GetComponent<BoxCollider2D>().enabled = false;
@@ -93,6 +93,13 @@ public class GetMine : MonoBehaviour
 
                 //该物体被开采成功
                 BackpackManager.AddItem(ID);
+
+                if (this.transform.parent.GetComponent<BoxCollider2D>())
+                {
+                    //Debug.Log(this.transform.parent.GetComponent<BoxCollider2D>().enabled = fa);
+                    this.transform.parent.GetComponent<BoxCollider2D>().enabled = false;
+                    Debug.Log(3);
+                }
 
                 Destroy(gameObject);
             }

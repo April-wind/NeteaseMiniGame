@@ -253,7 +253,6 @@ GameObject:
   - component: {fileID: 3515914169988966409}
   - component: {fileID: 3515914169988966408}
   - component: {fileID: 3515914169988966415}
-  - component: {fileID: 677079370}
   m_Layer: 26
   m_Name: "\u8611\u83C71\u65392"
   m_TagString: Mine
@@ -312,7 +311,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 2a39934f8c6a69a4e9e7cb1739cca5a1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -366,22 +365,6 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 67108864
---- !u!114 &677079370
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3515914169988966411}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50ed8ed652d3f624eb2fad50ff42c1d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: {fileID: 960038598}
-  introduce: 
-  textAwakeSpeed: 0.02
-  textIntervalTime: 0
 --- !u!1 &3515914170015382885
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,7 +398,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -551,7 +534,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!114 &3515914170612382824
 MonoBehaviour:

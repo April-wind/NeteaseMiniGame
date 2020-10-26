@@ -88,7 +88,7 @@ public class LemmingMove : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
@@ -248,10 +248,20 @@ public class LemmingMove : MonoBehaviour
             BackpackManager.instance.gridNum--;
             Debug.Log("Delete");
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
         if(collision.tag == "Door")
         {
-            Debug.Log("进入");
-            InDoor = !InDoor;
+            if(moveDir.y > 0)
+            {
+                InDoor = true;
+            }
+            else
+            {
+                InDoor = false;
+            }
         }
     }
 
