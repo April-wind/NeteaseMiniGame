@@ -13,6 +13,9 @@ public class BackpackManager : MonoBehaviour
     public GameObject emptySlot;
     public List<GameObject> slots = new List<GameObject>();//格子列表
     public int gridNum;//格子个数
+    public Material material;//火把
+    private float lightValue = 0f;//光照值
+    private float newLightValue = 0f;
 
     //单例
     void Awake()
@@ -31,6 +34,10 @@ public class BackpackManager : MonoBehaviour
         RefreshItem();
     }
 
+    void Update()
+    {
+        torchLit(newLightValue);
+    }
     public static void RefreshItem()
     {
         int tmp = 0;
@@ -75,20 +82,43 @@ public class BackpackManager : MonoBehaviour
                 tmp++;
             }
         }
+        bool flag = false;
+        for (int i = 0; i < instance.backpack.data.GetLength(0); i++)
+            for (int j = 0; j < instance.backpack.data.GetLength(1); j++)
+            {
+                if (instance.backpack.data[i, j] == 3)
+                    flag = true;
+            }
+        if (flag)
+        {
+            instance.newLightValue = 0.4f;
+        }
+        else
+        {
+            instance.newLightValue = 0.0f;
+        }
+
+
     }
 
     //测试用
     public static void AddItem(int id)
     {
-        instance.backpack.PutIn(instance.myInventory.itemList[id]);
+        if (id == 0)
+            return;
+        Vector2Int t = new Vector2Int(-1, -1);
+        if (instance.backpack.PutIn(instance.myInventory.itemList[id]) == t)
+        {
+            LemmingSumControl._Instance.CreateItem(instance.myInventory.itemList[id]);
+        }
         RefreshItem();
     }
     public static void RemoveGrid()
     {
-
-        if (instance.backpack.GridReduction() != 0)
+        int id = instance.backpack.GridReduction();
+        if (id != 0)
         {
-            //格子减少导致的物品掉落应该有个丢弃信号
+            LemmingSumControl._Instance.CreateItem(instance.myInventory.itemList[id]);
         }
         RefreshItem();
     }
@@ -102,5 +132,10 @@ public class BackpackManager : MonoBehaviour
                 RefreshItem();
             }
         }
+    }
+    private void torchLit(float newLightValue)
+    {
+        lightValue = Mathf.Lerp(lightValue, newLightValue, Time.deltaTime);
+        material.SetFloat("_lightStrength", lightValue);
     }
 }

@@ -5,13 +5,12 @@ using UnityEngine;
 public class Backpack
 {
     public int[,] data;//用二维数组保存物品的存储信息(id)
-
     /*
     以每个物品的左上角坐标(x,y)为标志,
     向data写入物品时同步将其(x,y)写入其所占用的位置在storeData的映射(其x,y坐标)
     */
     public Vector2Int[,] storeData;
-
+    public int[,] compositeTable;
     //当前可用的最新的格子的坐标
     public int newX = 0;
     public int newY = 0;
@@ -22,10 +21,12 @@ public class Backpack
     {
         data = new int[n, n];
         storeData = new Vector2Int[n, n];
+        compositeTable = new int[n, n];
         for (int i = 0; i < n; i++)
             for (int j = 0; j < n; j++)
             {
                 data[i, j] = -1;
+                compositeTable[i, j] = 0;
                 storeData[i, j] = new Vector2Int(-1, -1);
             }
         data[0, 0] = 0;
@@ -33,11 +34,16 @@ public class Backpack
         {
             GridGeneration();
         }
+        {//合成表
+            compositeTable[1, 2] = 3;
+        }
     }
 
     //单点物品放入检测函数, x,y为受检测点的坐标
     private bool CheckPut(int x, int y, Item item)
     {
+        if (item == null)
+            return false;
         //越界检测
         if (x + item.height > data.GetLength(0))
             return false;

@@ -87,7 +87,6 @@ GameObject:
   - component: {fileID: 7428575176989775012}
   - component: {fileID: 3512811227715659865}
   - component: {fileID: 1058796277303935457}
-  - component: {fileID: 9192879507949425719}
   m_Layer: 9
   m_Name: Item
   m_TagString: Untagged
@@ -167,35 +166,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 786f3bda0968b484aae35b2b623cabaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originalParent: {fileID: 0}
-  myInventory: {fileID: 11400000, guid: ae04609894a3ec6439661e73118abb9e, type: 2}
+  originalParentParent: {fileID: 0}
   scaleUICamera: {fileID: 0}
---- !u!61 &9192879507949425719
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2665731162933369952}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!1 &6856853708737091135
 GameObject:
   m_ObjectHideFlags: 0
@@ -209,7 +181,8 @@ GameObject:
   - component: {fileID: 6856853708737091133}
   - component: {fileID: 1880089366449642412}
   - component: {fileID: 4972148729849757603}
-  m_Layer: 5
+  - component: {fileID: 3380711031523140932}
+  m_Layer: 9
   m_Name: Slot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -288,7 +261,7 @@ MonoBehaviour:
   slotItem: {fileID: 0}
   slotImage: {fileID: 3569433488903477420}
   itemInSlot: {fileID: 2665731162933369952}
-  available: 1
+  position: {x: 0, y: 0}
 --- !u!114 &4972148729849757603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,3 +274,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a87854cb20edae14788abbf5756c3b3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &3380711031523140932
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6856853708737091135}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 100, y: 100, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

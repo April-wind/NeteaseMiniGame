@@ -187,8 +187,10 @@ public class LemmingSumControl : MonoBehaviour
     /// 在场景中生成掉落物体
     /// </summary>
     /// <param name="item"></param>
-    private void CreateItem(Item item)
+    public void CreateItem(Item item)
     {
+        if (item==null)
+            return;
         goodObj = GameObject.Instantiate(goodInstance);
         goodObj.GetComponent<GetMine>().ID = item.id;
         goodObj.GetComponent<SpriteRenderer>().sprite = item.itemImage;
