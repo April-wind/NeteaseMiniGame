@@ -66,6 +66,7 @@ public class GetMine : MonoBehaviour
                 else if (hit && hit.collider.tag == "DropObj" && hit.collider.gameObject == this.gameObject)
                 {
                     BackpackManager.AddItem(ID);
+                    Debug.Log("uiqu");
                     Destroy(gameObject);
                 }
                 else if (hit && hit.collider.tag == "TreasureChest" && hit.collider.gameObject == this.gameObject)

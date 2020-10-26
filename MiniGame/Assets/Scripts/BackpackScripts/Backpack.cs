@@ -36,6 +36,7 @@ public class Backpack
         }
         {//合成表
             compositeTable[1, 2] = 3;
+            compositeTable[2, 2] = 6;
         }
     }
 
