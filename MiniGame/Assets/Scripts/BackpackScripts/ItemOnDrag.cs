@@ -77,7 +77,7 @@ public class ItemOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         a.丢弃->应该有个丢弃信号
         b.交换
         c.合成
-        d.弹回
+        d.弹回->要检测,否则拖拽过程中若格子减少会出现bug
         **/
         //碰撞信息类
         RaycastHit hit;
@@ -125,14 +125,22 @@ public class ItemOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
             }
             else//目标mxn->c/d
             {
-                //这里先进行合成判定->c
+                //这里先进行合成判定->c/d
                 if (!ItemSynthesis(currentItem.id, targetItem.id))//合成函数返回false->d
                 {
-                    BackpackManager.instance.backpack.PointPutIn(currentPosition.x, currentPosition.y, currentItem);//恢复原物体
-                    BackpackManager.RefreshItem();
-                    Debug.Log("弹回");
+                    if (BackpackManager.instance.backpack.PointPutIn(currentPosition.x, currentPosition.y, currentItem))//恢复原物体
+                    {
+                        BackpackManager.RefreshItem();
+                        Debug.Log("弹回");
+                    }
+                    else
+                    {
+                        BackpackManager.RefreshItem();
+                        LemmingSumControl._Instance.CreateItem(currentItem);
+                        Debug.Log("弹回失败,丢弃");
+                    }
                 }
-                else
+                else//->c
                 {
                     BackpackManager.RefreshItem();
                     Debug.Log("合成");
@@ -152,21 +160,37 @@ public class ItemOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
                 }
                 else//d
                 {
-                    BackpackManager.instance.backpack.PointPutIn(currentPosition.x, currentPosition.y, currentItem);//恢复原物体
-                    BackpackManager.RefreshItem();
-                    Debug.Log("弹回");
+                    if (BackpackManager.instance.backpack.PointPutIn(currentPosition.x, currentPosition.y, currentItem))//恢复原物体
+                    {
+                        BackpackManager.RefreshItem();
+                        Debug.Log("弹回");
+                    }
+                    else
+                    {
+                        BackpackManager.RefreshItem();
+                        LemmingSumControl._Instance.CreateItem(currentItem);
+                        Debug.Log("弹回失败,丢弃");
+                    }
                 }
             }
             else//非空格->c/d
             {
-                //这里先进行合成判定->c
+                //这里先进行合成判定->c/d
                 if (!ItemSynthesis(currentItem.id, targetItem.id))//合成函数返回false->d
                 {
-                    BackpackManager.instance.backpack.PointPutIn(currentPosition.x, currentPosition.y, currentItem);//恢复原物体
-                    BackpackManager.RefreshItem();
-                    Debug.Log("弹回");
+                    if (BackpackManager.instance.backpack.PointPutIn(currentPosition.x, currentPosition.y, currentItem))//恢复原物体
+                    {
+                        BackpackManager.RefreshItem();
+                        Debug.Log("弹回");
+                    }
+                    else
+                    {
+                        BackpackManager.RefreshItem();
+                        LemmingSumControl._Instance.CreateItem(currentItem);
+                        Debug.Log("弹回失败,丢弃");
+                    }
                 }
-                else
+                else//->c
                 {
                     BackpackManager.RefreshItem();
                     Debug.Log("合成");
