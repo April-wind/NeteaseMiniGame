@@ -13,6 +13,8 @@ public class BackpackManager : MonoBehaviour
     public GameObject emptySlot;
     public List<GameObject> slots = new List<GameObject>();//格子列表
     public int gridNum;//格子个数
+    public Material material;//火把
+    private float lightValue;//光照值
 
     //单例
     void Awake()
@@ -75,13 +77,28 @@ public class BackpackManager : MonoBehaviour
                 tmp++;
             }
         }
+        bool flag = false;
+        for (int i = 0; i < instance.backpack.data.GetLength(0); i++)
+            for (int j = 0; j < instance.backpack.data.GetLength(1); j++)
+            {
+                if (instance.backpack.data[i, j] == 3)
+                    flag = true;
+            }
+        if (flag)
+            instance.torchLit(0.4f);
+        else
+            instance.torchLit(0f);
+
+
     }
 
     //测试用
     public static void AddItem(int id)
     {
+        if (id == 0)
+            return;
         Vector2Int t = new Vector2Int(-1, -1);
-       if( instance.backpack.PutIn(instance.myInventory.itemList[id])==t)
+        if (instance.backpack.PutIn(instance.myInventory.itemList[id]) == t)
         {
             LemmingSumControl._Instance.CreateItem(instance.myInventory.itemList[id]);
         }
@@ -99,10 +116,16 @@ public class BackpackManager : MonoBehaviour
     public static void UseItem(int x, int y)
     {
         //Debug.Log(instance.backpack.data[x,y]);
-        if(instance.backpack.data[x,y] != -1 && instance.backpack.data[x,y] != 0){
-            instance.myInventory.itemList[instance.backpack.data[x,y]].use();
-            instance.backpack.ItemReduction(x,y);
+        if (instance.backpack.data[x, y] != -1 && instance.backpack.data[x, y] != 0)
+        {
+            instance.myInventory.itemList[instance.backpack.data[x, y]].use();
+            instance.backpack.ItemReduction(x, y);
             RefreshItem();
         }
+    }
+    private void torchLit(float newLightValue)
+    {
+        lightValue = Mathf.Lerp(lightValue, newLightValue, Time.deltaTime);
+        material.SetFloat("_lightStrength", lightValue);
     }
 }

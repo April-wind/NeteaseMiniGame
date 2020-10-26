@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GetMine : MonoBehaviour
 {
     public int ID;
-    public LayerMask layer; 
+    public LayerMask layer;
 
     //可以开采
     private bool canMine;
@@ -20,7 +20,7 @@ public class GetMine : MonoBehaviour
     //player
     private GameObject player;
     private LemmingMove testMove;
-     
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,28 +46,33 @@ public class GetMine : MonoBehaviour
     void Update()
     {
         MineProgress();
-        if(sliderObj)
+        if (sliderObj)
             Interrupt();
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision.tag == "Player")
+        if (collision.tag == "Player")
         {
             //Debug.Log(1);
             if (Input.GetMouseButtonDown(0))
             {
-                RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.back, 5f,layer);
-                if(hit && hit.collider.tag == "Mine")
+                RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.back, 5f, layer);
+                if (hit && hit.collider.tag == "Mine")
                 {
                     Debug.Log("Click");
                     canMine = true;
                 }
-                else if(hit && hit.collider.tag == "DropObj")
+                else if (hit && hit.collider.tag == "DropObj")
                 {
                     BackpackManager.AddItem(ID);
-
                     Destroy(gameObject);
+                }
+                else if (hit && hit.collider.tag == "TreasureChest")
+                {
+                    GetComponent<SpriteRenderer>().enabled = false;
+                    GetComponent<BoxCollider2D>().enabled = false;
+                    transform.Find("宝物").gameObject.SetActive(true);
                 }
             }
         }
@@ -80,14 +85,14 @@ public class GetMine : MonoBehaviour
             sliderObj.SetActive(true);
             progress += Time.deltaTime;
             slider.value = progress;
-            if(slider.value >= slider.maxValue)
+            if (slider.value >= slider.maxValue)
             {
                 slider.value = slider.maxValue;
                 Debug.Log(this.name + "开采成功");
 
                 //该物体被开采成功
                 BackpackManager.AddItem(ID);
-                
+
                 Destroy(gameObject);
             }
             //Debug.Log(progress);
@@ -96,7 +101,7 @@ public class GetMine : MonoBehaviour
 
     void Interrupt()
     {
-        if(testMove.moveDir.x != 0 || testMove.moveDir.y != 0)
+        if (testMove.moveDir.x != 0 || testMove.moveDir.y != 0)
         {
             canMine = false;
 
