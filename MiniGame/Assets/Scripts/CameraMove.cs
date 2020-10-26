@@ -10,6 +10,9 @@ public class CameraMove : MonoBehaviour
     //运动速度
     [SerializeField]
     private float followSpeed;
+    [SerializeField]
+    private float maxX,maxY,minX,minY;
+    private float factorX = 1.8f,factorY = 1f;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,8 +27,12 @@ public class CameraMove : MonoBehaviour
 
     private void LateUpdate()
     {
-        float newX = Mathf.Min(Mathf.Max(followTarget.transform.position.x + 1,0),88.1f);
-        float newY = Mathf.Min(Mathf.Max(followTarget.transform.position.y + 1,-24.9f),29.8f);
+        maxX = 98 - factorX * gameObject.GetComponent<Camera>().orthographicSize;
+        maxY = 35.4f - factorY * gameObject.GetComponent<Camera>().orthographicSize;
+        minX = -9.9f + factorX * gameObject.GetComponent<Camera>().orthographicSize;
+        minY = -30.5f + factorY * gameObject.GetComponent<Camera>().orthographicSize;
+        float newX = Mathf.Min(Mathf.Max(followTarget.transform.position.x + 1,minX),maxX);
+        float newY = Mathf.Min(Mathf.Max(followTarget.transform.position.y + 1,minY),maxY);
         this.transform.position = Vector3.Lerp(this.transform.position, new Vector3(newX,newY,transform.position.z), Time.deltaTime * followSpeed);
     }
 }
