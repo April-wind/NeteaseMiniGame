@@ -46,6 +46,9 @@ public class RandomPathAI : MonoBehaviour
     //射线相关
     private Ray2D ray;
     private RaycastHit2D info;
+
+    //SpriteRend
+    private SpriteRenderer spriteRenderer;
     // Start is called before the first frame update
     void Start()
     {
@@ -75,6 +78,9 @@ public class RandomPathAI : MonoBehaviour
         rotateTime = 0;
 
         canSrand = true;
+
+        //sr
+        spriteRenderer = this.GetComponent<SpriteRenderer>();
         //Pos
         //rightPos = false;
     }
@@ -202,8 +208,17 @@ public class RandomPathAI : MonoBehaviour
         //if(info.collider.)
         lastState = State.Idle;
 
-        this.transform.rotation = Quaternion.Euler(0, 0, num * 45 * (-1));
-        moveDir = new Vector2(Mathf.Cos((3 - num) * 45 * Mathf.Deg2Rad), Mathf.Sin((3 - num) * 45 * Mathf.Deg2Rad));
+        if(num == 0 || num == 1 || num == 7 || num == 2)
+        {
+            spriteRenderer.flipX = false;
+            spriteRenderer.flipY = false;
+        }
+        else
+        {
+            spriteRenderer.flipX = true;
+            spriteRenderer.flipY = false;
+        }
+        moveDir = new Vector2(Mathf.Cos((0 - num) * 45 * Mathf.Deg2Rad), Mathf.Sin((0 - num) * 45 * Mathf.Deg2Rad));
         this.transform.Translate(moveDir.normalized * Time.deltaTime * idleSpeed, Space.World);
     }
 
@@ -216,13 +231,24 @@ public class RandomPathAI : MonoBehaviour
         lastState = State.Track;
 
         moveDir = (player.transform.position - this.transform.position);
+
+        if(moveDir.x > 0)
+        {
+            spriteRenderer.flipX = false;
+            spriteRenderer.flipY = false;
+        }
+        else
+        {
+            spriteRenderer.flipX = true;
+            spriteRenderer.flipY = false;
+        }
         //有一定距离，则向主角移动
         if (moveDir.magnitude >= 0.5f)
         {
             //Vector3 trackDir = player.transform.position - this.transform.position;
-            float angle = Vector3.SignedAngle(moveDir.normalized, Vector2.right, Vector3.back);
+            //float angle = Vector3.SignedAngle(moveDir.normalized, Vector2.right, Vector3.back);
             //Debug.Log(angle);
-            this.transform.rotation = Quaternion.Euler(0, 0, angle - 135);
+            //this.transform.rotation = Quaternion.Euler(0, 0, angle - 0);
             this.transform.Translate(moveDir.normalized * Time.deltaTime * trackSpeed, Space.World);
         }
         //this.transform.position = Vector3.MoveTowards(this.transform.position, player.transform.position,
@@ -233,15 +259,25 @@ public class RandomPathAI : MonoBehaviour
     {
         lastState = State.AvoidWall;
 
-        float angle = Vector3.SignedAngle(moveDir, curMoveDir, Vector3.forward);
-        if (rotateTime == 0)
-        {
-            this.transform.Rotate(new Vector3(0, 0, angle), Space.World);
-            rotateTime = 1;
-        }
+        //float angle = Vector3.SignedAngle(moveDir, curMoveDir, Vector3.forward);
+        //if (rotateTime == 0)
+        //{
+        //    this.transform.Rotate(new Vector3(0, 0, angle), Space.World);
+        //    rotateTime = 1;
+        //}
 
         
         moveDir = curMoveDir;
+        if (moveDir.x > 0)
+        {
+            spriteRenderer.flipX = false;
+            spriteRenderer.flipY = false;
+        }
+        else
+        {
+            spriteRenderer.flipX = true;
+            spriteRenderer.flipY = false;
+        }
         this.transform.Translate(curMoveDir.normalized * Time.deltaTime * idleSpeed, Space.World);
     }
 

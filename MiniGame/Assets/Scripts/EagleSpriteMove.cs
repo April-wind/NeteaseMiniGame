@@ -11,11 +11,11 @@ public class EagleSpriteMove : MonoBehaviour
     {
         float x,y;
         Tweener tweener;
-        x = transform.position.x;
-        y = transform.position.y;
-        tweener = transform.DOLocalMove(new Vector3(0,0,transform.position.z),timeBeforeImpact).SetAutoKill(true).SetEase(Ease.InCubic);
+        x = transform.localPosition.x;
+        y = transform.localPosition.y;
+        tweener = transform.DOLocalMove(new Vector3(0,0,transform.localPosition.z),timeBeforeImpact).SetAutoKill(true).SetEase(Ease.InCubic);
         tweener.OnComplete(()=>{
-            transform.DOLocalMove(new Vector3(-x,y,transform.position.z),timeBeforeImpact);
+            transform.DOLocalMove(new Vector3(-x - 40,y + 40,transform.localPosition.z),timeBeforeImpact);
         });
     }
 

@@ -27,7 +27,7 @@ public class foodQuantity : MonoBehaviour
 
     public void HealthControl()
     {
-        float subtractionFactor = Mathf.CeilToInt(Mathf.Sqrt(BackpackManager.instance.gridNum)) * 0.0005f;//目前因子:旅鼠数开方向上取整
+        float subtractionFactor = Mathf.CeilToInt(Mathf.Sqrt(BackpackManager.instance.gridNum)) * 0.0003f;//目前因子:旅鼠数开方向上取整
         health = BackpackManager.instance.gridNum;
         LemmingSumControl._Instance.lemmingNumTrue = BackpackManager.instance.gridNum;
         counter += subtractionFactor;

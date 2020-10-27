@@ -235,7 +235,7 @@ public class LemmingMove : MonoBehaviour
             bloodChange = 40;
             BackpackManager.RemoveGrid();
             BackpackManager.instance.gridNum--;
-            Debug.Log("Delete");
+            Debug.Log(collision.gameObject.name);
             Destroy(collision.gameObject,0.5f);
         }
         if (collision.tag == "SnakeCost")
@@ -243,7 +243,7 @@ public class LemmingMove : MonoBehaviour
             bloodChange = 20;
             BackpackManager.RemoveGrid();
             BackpackManager.instance.gridNum--;
-            Debug.Log("Delete");
+            Debug.Log(collision.gameObject.name);
         }
         //猫头鹰扣血
         if(collision.tag == "Eagle")
@@ -251,7 +251,7 @@ public class LemmingMove : MonoBehaviour
             bloodChange = 30;
             BackpackManager.RemoveGrid();
             BackpackManager.instance.gridNum--;
-            Debug.Log("Delete");
+            Debug.Log(collision.gameObject.name);
         }
     }
 
