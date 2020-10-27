@@ -60,7 +60,9 @@ public class LemmingMove : MonoBehaviour
 
     //是否进入左上角
     [SerializeField]
-    private bool InDoor; 
+    private bool InDoor;
+    //左上角的云
+    private GameObject cloud;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -84,6 +86,9 @@ public class LemmingMove : MonoBehaviour
         distance = 1.8f;
 
         boxChangeSpeed = 10.0f;
+
+        //云
+        cloud = GameObject.FindWithTag("Cloud");
         //this.GetComponent<BoxCollider>().size = new Vector3(2, 2, 2);
     }
 
@@ -257,10 +262,12 @@ public class LemmingMove : MonoBehaviour
             if(moveDir.y > 0)
             {
                 InDoor = true;
+                cloud.SetActive(false);
             }
             else
             {
                 InDoor = false;
+                cloud.SetActive(true);
             }
         }
     }

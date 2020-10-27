@@ -16,6 +16,7 @@ TagManager:
   - Door
   - TreasureChest
   - Bridge
+  - Cloud
   layers:
   - Default
   - TransparentFX
