@@ -54,7 +54,7 @@ public class GetMine : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            
+
             if (Input.GetMouseButtonDown(0))
             {
                 RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.back, 5f, layer);
@@ -70,9 +70,10 @@ public class GetMine : MonoBehaviour
                     Destroy(gameObject);
                 }
                 else if (hit && hit.collider.tag == "TreasureChest" && hit.collider.gameObject == this.gameObject)
-                {Debug.Log(176543);
+                {
                     GetComponent<SpriteRenderer>().enabled = false;
                     GetComponent<BoxCollider2D>().enabled = false;
+                    this.gameObject.layer = LayerMask.NameToLayer("Default");
                     transform.Find("宝物").gameObject.SetActive(true);
                     transform.Find("奶酪").gameObject.SetActive(true);
                 }
