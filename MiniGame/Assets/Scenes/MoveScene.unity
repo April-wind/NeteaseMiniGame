@@ -9907,7 +9907,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 8192
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 1315712809}
+  m_TargetTexture: {fileID: 1319069463}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -10635,7 +10635,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bccdd155f494dd24abef4f2ff4d4dbb1, type: 3}
---- !u!84 &1315712809
+--- !u!84 &1319069463
 RenderTexture:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10739,17 +10739,17 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3515914170015382906, guid: 44298008ebd78f64fadf682215f5e61f,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3515914169986135116, guid: 44298008ebd78f64fadf682215f5e61f,
         type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3515914171092001518, guid: 44298008ebd78f64fadf682215f5e61f,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3515914170015382906, guid: 44298008ebd78f64fadf682215f5e61f,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -10924,6 +10924,11 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3515914170015382906, guid: 44298008ebd78f64fadf682215f5e61f,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3515914169988966408, guid: 44298008ebd78f64fadf682215f5e61f,
         type: 3}
       propertyPath: m_Size.x
@@ -10933,11 +10938,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Size.y
       value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3515914170015382906, guid: 44298008ebd78f64fadf682215f5e61f,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 44298008ebd78f64fadf682215f5e61f, type: 3}
@@ -41788,7 +41788,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 28099279}
-        m_MethodName: EnterGame
+        m_MethodName: ExitGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
